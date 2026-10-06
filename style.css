@@ -107,7 +107,7 @@ nav a:hover { color: var(--accent); }
 }
 .flip-card-back img { width: 100%; height: 100%; object-fit: cover; }
 
-/* --- CUTE RETRO TV STYLES --- */
+/* --- CUTE RETRO TV STYLES (SOFTER COLOR) --- */
 .tv-section {
     padding: 60px 20px;
     text-align: center;
@@ -151,19 +151,19 @@ nav a:hover { color: var(--accent); }
 .antenna.right { transform: translateX(-50%) rotate(35deg); }
 
 .tv-console {
-    background: #ffb7b2; /* Cute pastel pink */
-    border-radius: 30px;
-    padding: 30px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.15), inset 0 4px 10px rgba(255,255,255,0.6);
-    border: 8px solid #e5989b;
+    background: #fdf4f4; /* Softer, muted pink */
+    border-radius: 50px; /* Much rounder! */
+    padding: 35px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.1), inset 0 4px 10px rgba(255,255,255,0.8);
+    border: 6px solid #e8c3c3; /* Softer dusty rose border */
 }
 
 .tv-screen-bezel {
     background: #ffffff;
-    border-radius: 20px;
+    border-radius: 30px; /* Rounder screen bezel */
     padding: 15px;
-    box-shadow: inset 0 0 20px rgba(0,0,0,0.1);
-    border: 6px solid #e07a5f;
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.08);
+    border: 6px solid #e8c3c3; /* Matches the TV border */
 }
 
 #bennet-tv-player {
@@ -171,7 +171,7 @@ nav a:hover { color: var(--accent); }
     width: 100%;
     aspect-ratio: 16 / 9;
     background: #000;
-    border-radius: 10px;
+    border-radius: 15px;
 }
 
 /* Cute Round Buttons inside the TV */
@@ -181,7 +181,7 @@ nav a:hover { color: var(--accent); }
     gap: 20px;
     margin-top: 25px;
     padding-top: 15px;
-    border-top: 3px dashed #e5989b;
+    border-top: 3px dashed #e8c3c3; /* Soft dashed line */
     flex-wrap: wrap;
 }
 .tv-btn {
@@ -195,11 +195,11 @@ nav a:hover { color: var(--accent); }
     border: 4px solid white;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 6px 10px rgba(0,0,0,0.15);
+    box-shadow: 0 6px 10px rgba(0,0,0,0.1);
 }
 .tv-btn:hover {
     transform: scale(1.1) translateY(-5px);
-    box-shadow: 0 10px 15px rgba(0,0,0,0.2);
+    box-shadow: 0 10px 15px rgba(0,0,0,0.15);
 }
 .tv-btn.active {
     transform: scale(1.1);
