@@ -152,26 +152,29 @@
     <!-- MYSTERY GIFT BOX SECTION -->
     <section id="mystery" class="mystery-section">
         <h2>A Little Surprise</h2>
-        <p>Warning: Contains high levels of cuteness. Open at your own risk.</p>
         
-        <div class="gift-container" id="gift-box" onclick="openGift()">
-            <div class="gift-lid"></div>
-            <div class="gift-box-body"></div>
-            <div class="gift-ribbon-v"></div>
-            <div class="gift-ribbon-h"></div>
-            <div class="gift-bow"></div>
-        </div>
+        <div class="mystery-display-area">
+            <!-- The Gift Box -->
+            <div class="gift-container" id="gift-box" onclick="openGift()">
+                <div class="gift-lid"></div>
+                <div class="gift-box-body"></div>
+                <div class="gift-ribbon-v"></div>
+                <div class="gift-ribbon-h"></div>
+                <div class="gift-bow"></div>
+            </div>
 
-        <!-- Flickering Warning Message (Hidden by default) -->
-        <div id="warning-message" class="warning-message hidden">
-            ⚠️ WARNING: EXTREME CUTENESS DETECTED ⚠️
-        </div>
+            <!-- Flickering Warning Message (Hidden by default) -->
+            <div id="warning-message" class="warning-message hidden">
+                ⚠️ EXTREME CUTENESS DETECTED ⚠️
+            </div>
 
-        <div class="mystery-video-container hidden" id="mystery-video">
-            <video controls>
-                <source src="cute.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
+            <!-- The Video (Hidden by default) -->
+            <div class="mystery-video-container hidden" id="mystery-video">
+                <video controls>
+                    <source src="cute.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
         </div>
     </section>
 
@@ -199,13 +202,15 @@
             btn.classList.add('active');
         }
 
-        // --- MYSTERY GIFT BOX LOGIC (With Flickering Warning) ---
+        // --- MYSTERY GIFT BOX LOGIC (Swap Sequence) ---
         function openGift() {
             const gift = document.getElementById('gift-box');
             const warning = document.getElementById('warning-message');
             const videoContainer = document.getElementById('mystery-video');
+            const video = videoContainer.querySelector('video');
 
-            if (gift.classList.contains('open')) return; // Prevent multiple clicks
+            // Prevent clicking if the sequence is already running
+            if (gift.style.display === 'none') return; 
 
             // 1. Shake the box
             gift.classList.add('shake');
@@ -215,22 +220,30 @@
                 gift.classList.remove('shake');
                 gift.classList.add('open');
 
-                // 3. Show the flickering warning
-                warning.classList.remove('hidden');
-                warning.classList.add('flicker');
-
-                // 4. Hide warning and reveal video
+                // 3. Hide the gift completely and show the warning
                 setTimeout(() => {
-                    warning.classList.add('hidden');
-                    warning.classList.remove('flicker');
-                    videoContainer.classList.remove('hidden');
-                    
-                    // Auto-play the video
-                    const video = videoContainer.querySelector('video');
-                    if (video) {
+                    gift.style.display = 'none'; 
+                    warning.classList.remove('hidden');
+                    warning.classList.add('flicker');
+
+                    // 4. Hide warning and reveal video
+                    setTimeout(() => {
+                        warning.classList.add('hidden');
+                        warning.classList.remove('flicker');
+                        videoContainer.classList.remove('hidden');
+                        
+                        // Auto-play the video
                         video.play().catch(e => console.log("Auto-play blocked:", e));
-                    }
-                }, 2500); // Warning shows for 2.5 seconds
+                        
+                        // 5. When video finishes, reset the whole section
+                        video.onended = function() {
+                            videoContainer.classList.add('hidden');
+                            gift.style.display = 'block'; // Bring the gift back
+                            gift.classList.remove('open');
+                        };
+                    }, 2500); // Warning shows for 2.5 seconds
+
+                }, 500); // Wait for lid to open
 
             }, 500); // Shake lasts for 0.5 seconds
         }
