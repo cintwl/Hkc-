@@ -28,7 +28,6 @@
         <p class="subtitle">Go ahead — click a card.</p>
 
         <div class="cards-grid">
-            <!-- Card 1: QQ -->
             <div class="flip-card">
                 <div class="flip-card-inner">
                     <div class="flip-card-front">
@@ -41,8 +40,6 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Card 2: Winnie the Pooh -->
             <div class="flip-card">
                 <div class="flip-card-inner">
                     <div class="flip-card-front">
@@ -55,8 +52,6 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Card 3: Kaka the Dog -->
             <div class="flip-card">
                 <div class="flip-card-inner">
                     <div class="flip-card-front">
@@ -69,8 +64,6 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Card 4: Angry -->
             <div class="flip-card">
                 <div class="flip-card-inner">
                     <div class="flip-card-front">
@@ -112,17 +105,6 @@
                     <button onclick="resetRunnerGame()">Try Again</button>
                 </div>
             </div>
-            
-            <div class="console-bottom">
-                <div class="d-pad">
-                    <div class="d-up">▲</div>
-                    <div class="d-down">▼</div>
-                </div>
-                <div class="action-buttons">
-                    <div class="btn-a">A</div>
-                    <div class="btn-b">B</div>
-                </div>
-            </div>
         </div>
     </section>
 
@@ -130,7 +112,6 @@
         <p>Made with love and a lot of laughter ❤️</p>
     </footer>
 
-    <!-- JAVASCRIPT FOR CARDS AND GAME -->
     <script>
         // --- FLIP CARD LOGIC ---
         const cards = document.querySelectorAll('.flip-card');
@@ -144,7 +125,6 @@
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
         
-        // Game State
         let runnerGameActive = false;
         let runnerScore = 0;
         let highScore = localStorage.getItem('bennetHighScore') || 0;
@@ -152,20 +132,23 @@
         let obstacles = [];
         let isGameOver = false;
         
-        // Bennet Character Image
         const bennetImg = new Image();
         bennetImg.src = 'head.jpg'; 
         
         const player = {
             x: 50, y: 180, width: 60, height: 70,
-            dy: 0, gravity: 0.6, jumpPower: -13, grounded: true, isCrouching: false
+            dy: 0, gravity: 0.7, jumpPower: -10, grounded: true, isCrouching: false
         };
         
-        // High Score display
         document.getElementById('runner-highscore').innerText = highScore;
         
-        // Controls
+        // Keyboard Controls with Prevent Default
         document.addEventListener('keydown', (e) => {
+            // Prevent the page from scrolling when using Space, Up, or Down arrows
+            if (e.code === 'Space' || e.code === 'ArrowUp' || e.code === 'ArrowDown') {
+                e.preventDefault();
+            }
+
             if ((e.code === 'Space' || e.code === 'ArrowUp') && player.grounded && !isGameOver) {
                 player.dy = player.jumpPower;
                 player.grounded = false;
@@ -182,6 +165,7 @@
             }
         });
         
+        // Touch Controls
         canvas.addEventListener('touchstart', (e) => {
             e.preventDefault();
             if (player.grounded && !isGameOver) {
@@ -210,20 +194,15 @@
         }
 
         function runnerLoop() {
-            // Only stop updating physics if the game is over AND he has hit the ground
-            if (isGameOver && player.y >= 250 - player.height) {
-                return;
-            }
+            if (isGameOver && player.y >= 250 - player.height) return;
             
-            // Clear canvas
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             
-            // --- DRAW FOREST BACKGROUND ---
-            // Sky
+            // Draw Sky
             ctx.fillStyle = '#d4f1f4'; 
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             
-            // Sun with Rays
+            // Draw Sun
             ctx.fillStyle = '#FFD700';
             ctx.beginPath();
             ctx.arc(700, 50, 30, 0, Math.PI * 2);
@@ -238,7 +217,7 @@
                 ctx.stroke();
             }
             
-            // Trees (static)
+            // Draw Trees
             for(let i = 0; i < canvas.width; i += 150) {
                 ctx.fillStyle = '#6B4226';
                 ctx.fillRect(i + 30, 180, 20, 70);
@@ -248,16 +227,15 @@
                 ctx.fill();
             }
             
-            // Ground
+            // Draw Ground
             ctx.fillStyle = '#81B29A';
             ctx.fillRect(0, 250, canvas.width, 50);
             
             // --- PLAYER PHYSICS & ANIMATION ---
             if (!isGameOver) {
-                // Update height based on crouching
                 if (player.isCrouching && player.grounded) {
-                    player.height = 40;
-                    player.width = 60;
+                    player.height = 30;
+                    player.width = 70;
                 } else {
                     player.height = 70;
                     player.width = 60;
@@ -273,7 +251,6 @@
                     player.grounded = true;
                 }
             } else {
-                // Death animation: fall to the ground
                 player.dy += player.gravity;
                 player.y += player.dy;
                 if (player.y + player.height > 250) {
@@ -282,29 +259,27 @@
                 }
             }
             
-            // --- DRAW PLAYER ---
+            // --- DRAW PLAYER (Lying Down vs Standing) ---
             // Draw Legs
             ctx.fillStyle = '#3D405B';
             if (player.isCrouching) {
-                ctx.fillRect(player.x + 15, player.y + 30, 10, 10);
-                ctx.fillRect(player.x + 35, player.y + 30, 10, 10);
+                ctx.fillRect(player.x + 10, player.y + 15, 20, 10); 
             } else {
-                ctx.fillRect(player.x + 15, player.y + 50, 10, 20);
+                ctx.fillRect(player.x + 15, player.y + 50, 10, 20); 
                 ctx.fillRect(player.x + 35, player.y + 50, 10, 20);
             }
 
             // Draw Body
             ctx.fillStyle = '#E07A5F';
             if (player.isCrouching) {
-                ctx.fillRect(player.x + 10, player.y + 15, 40, 15);
+                ctx.fillRect(player.x + 25, player.y + 10, 35, 15); 
             } else {
-                ctx.fillRect(player.x + 10, player.y + 25, 40, 25);
+                ctx.fillRect(player.x + 10, player.y + 25, 40, 25); 
             }
 
             // Draw Arms
             if (player.isCrouching) {
-                ctx.fillRect(player.x - 5, player.y + 20, 15, 10);
-                ctx.fillRect(player.x + 50, player.y + 20, 15, 10);
+                ctx.fillRect(player.x + 35, player.y + 5, 15, 8);
             } else {
                 ctx.fillRect(player.x - 5, player.y + 30, 15, 10);
                 ctx.fillRect(player.x + 50, player.y + 30, 15, 10);
@@ -313,12 +288,13 @@
             // Draw Head (Circular clip)
             ctx.save();
             let headY = player.isCrouching ? player.y + 5 : player.y + 15;
+            let headX = player.isCrouching ? player.x + 65 : player.x + 30;
             ctx.beginPath();
-            ctx.arc(player.x + 30, headY, 22, 0, Math.PI * 2);
+            ctx.arc(headX, headY, 18, 0, Math.PI * 2);
             ctx.clip();
             
             if (bennetImg.complete) {
-                ctx.drawImage(bennetImg, player.x + 5, headY - 25, 50, 50);
+                ctx.drawImage(bennetImg, headX - 20, headY - 20, 40, 40);
             } else {
                 ctx.fillStyle = '#F4D03F';
                 ctx.fill();
@@ -330,9 +306,9 @@
                 let type = Math.random() > 0.5 ? 'ground' : 'air';
                 let obs = { x: canvas.width, width: 20, height: 20, speed: 6, type: type };
                 if (type === 'ground') {
-                    obs.y = 230; // On the ground
+                    obs.y = 230; 
                 } else {
-                    obs.y = 180; // In the air (must duck)
+                    obs.y = 140; 
                 }
                 obstacles.push(obs);
             }
@@ -342,12 +318,12 @@
                 obs.x -= obs.speed;
                 
                 if (obs.type === 'ground') {
-                    ctx.fillStyle = '#E07A5F'; // Red rock
+                    ctx.fillStyle = '#E07A5F'; 
                     ctx.beginPath();
                     ctx.arc(obs.x + 10, obs.y + 10, 10, 0, Math.PI * 2);
                     ctx.fill();
                 } else {
-                    ctx.fillStyle = '#F4D03F'; // Yellow bird
+                    ctx.fillStyle = '#F4D03F'; 
                     ctx.beginPath();
                     ctx.moveTo(obs.x, obs.y + 10);
                     ctx.lineTo(obs.x + 10, obs.y);
@@ -364,7 +340,6 @@
                     endRunnerGame();
                 }
                 
-                // Remove off-screen obstacles
                 if (obs.x + obs.width < 0) obstacles.splice(index, 1);
             });
             
@@ -382,14 +357,12 @@
             isGameOver = true;
             runnerGameActive = false;
             
-            // Check for New High Score
             if (runnerScore > highScore) {
                 highScore = runnerScore;
                 localStorage.setItem('bennetHighScore', highScore);
                 document.getElementById('runner-highscore').innerText = highScore;
             }
 
-            // Wait for death animation to finish before showing the message
             setTimeout(() => {
                 document.getElementById('game-over-message').classList.remove('hidden');
             }, 1000);
