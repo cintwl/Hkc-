@@ -12,6 +12,7 @@
     <nav>
         <a href="#home">Home</a>
         <a href="#cards">Get to Know Him</a>
+        <a href="#tv">Bennet TV</a>
         <a href="#game">Play Game</a>
     </nav>
 
@@ -79,6 +80,28 @@
         </div>
     </section>
 
+    <!-- BENNET TV SECTION (Now above the game) -->
+    <section id="tv" class="tv-section">
+        <h2>Bennet TV</h2>
+        <p>Pick a channel to watch Bennet in action!</p>
+        
+        <div class="tv-console">
+            <div class="tv-screen-bezel">
+                <video id="bennet-tv-player" controls>
+                    <source src="eating.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            
+            <div class="tv-controls">
+                <button class="tv-btn active" onclick="changeChannel('eating.mp4', this)">🍽️ Eating</button>
+                <button class="tv-btn" onclick="changeChannel('on9.mp4', this)">👩 Woman Bennet</button>
+                <button class="tv-btn" onclick="changeChannel('kaka.mp4', this)">🐶 Kaka</button>
+                <button class="tv-btn" onclick="changeChannel('sleeping.mp4', this)">😴 Sleeping</button>
+            </div>
+        </div>
+    </section>
+
     <!-- GAME SECTION: BENNET RUNNER -->
     <section id="game" class="game-section-runner">
         <h2>Bennet Runner</h2>
@@ -120,6 +143,17 @@
                 card.classList.toggle('is-flipped');
             });
         });
+
+        // --- BENNET TV LOGIC ---
+        function changeChannel(videoSrc, btn) {
+            const player = document.getElementById('bennet-tv-player');
+            player.src = videoSrc;
+            player.load();
+            player.play();
+            
+            document.querySelectorAll('.tv-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        }
 
         // --- BENNET RUNNER GAME LOGIC ---
         const canvas = document.getElementById('gameCanvas');
@@ -234,10 +268,9 @@
             // --- PLAYER PHYSICS & ANIMATION ---
             if (!isGameOver) {
                 if (player.isCrouching && player.grounded) {
-                    // INSTANT SNAP TO LYING POSITION
                     player.height = 20;
                     player.width = 70;
-                    player.y = 250 - player.height; // Snap to grass
+                    player.y = 250 - player.height; 
                 } else {
                     player.height = 70;
                     player.width = 60;
@@ -263,19 +296,14 @@
             
             // --- DRAW PLAYER (Lying Down vs Standing) ---
             if (player.isCrouching) {
-                // --- DRAWING CROUCHING PLAYER (FLAT ON GRASS) ---
-                // Legs flat on grass (bottom touches 250)
+                // Drawing Crouching Player (Flat on grass)
                 ctx.fillStyle = '#3D405B';
                 ctx.fillRect(player.x + 10, player.y + 15, 20, 5);
                 
-                // Body flat (touching grass)
                 ctx.fillStyle = '#E07A5F';
                 ctx.fillRect(player.x + 25, player.y + 10, 35, 10);
-                
-                // Arm flat
                 ctx.fillRect(player.x + 35, player.y + 10, 15, 8);
                 
-                // Head (Circular clip, center at 240)
                 ctx.save();
                 let headY = player.y + 10;
                 let headX = player.x + 65;
@@ -290,7 +318,7 @@
                 }
                 ctx.restore();
             } else {
-                // --- DRAWING STANDING PLAYER ---
+                // Drawing Standing Player
                 ctx.fillStyle = '#3D405B';
                 ctx.fillRect(player.x + 15, player.y + 50, 10, 20); 
                 ctx.fillRect(player.x + 35, player.y + 50, 10, 20);
@@ -321,9 +349,9 @@
                 let type = Math.random() > 0.5 ? 'ground' : 'air';
                 let obs = { x: canvas.width, width: 20, height: 20, speed: 6, type: type };
                 if (type === 'ground') {
-                    obs.y = 230; // On the ground (must jump)
+                    obs.y = 230; 
                 } else {
-                    obs.y = 170; // Higher air obstacle (must duck)
+                    obs.y = 170; 
                 }
                 obstacles.push(obs);
             }
