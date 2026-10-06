@@ -510,10 +510,10 @@ nav a:hover { color: var(--accent); }
     100% { opacity: 0.2; }
 }
 
-/* --- BEAUTIFUL FLICKERING FOOTER --- */
+/* --- BEAUTIFUL FLICKERING FOOTER (Matches Background) --- */
 footer {
     padding: 40px;
-    background-color: #FDE2E4;
+    background-color: var(--bg); /* Matches the main warm ivory background */
     color: #E07A5F;
     font-size: 2rem;
     font-weight: bold;
