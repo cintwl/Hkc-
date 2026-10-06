@@ -62,33 +62,28 @@ nav a:hover { color: var(--accent); }
     background-color: transparent;
     width: 100%;
     height: 380px;
-    perspective: 1000px; /* Essential for the 3D effect */
+    perspective: 1000px;
     cursor: pointer;
 }
-
 .flip-card-inner {
     position: relative;
     width: 100%;
     height: 100%;
     text-align: center;
     transition: transform 0.8s;
-    transform-style: preserve-3d; /* Essential for the 3D effect */
+    transform-style: preserve-3d;
     border-radius: 20px;
     box-shadow: var(--shadow);
 }
-
-/* The flip effect on click */
 .flip-card.is-flipped .flip-card-inner {
     transform: rotateY(180deg);
 }
-
-/* Front and Back common styles */
 .flip-card-front, .flip-card-back {
     position: absolute;
     width: 100%;
     height: 100%;
-    -webkit-backface-visibility: hidden; /* Safari */
-    backface-visibility: hidden; /* Other browsers */
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
     border-radius: 20px;
     overflow: hidden;
     display: flex;
@@ -97,8 +92,6 @@ nav a:hover { color: var(--accent); }
     align-items: center;
     padding: 20px;
 }
-
-/* Front specific */
 .flip-card-front {
     background-color: var(--card-front);
     border: 3px solid var(--accent2);
@@ -106,15 +99,134 @@ nav a:hover { color: var(--accent); }
 .flip-card-front .icon { font-size: 4rem; margin-bottom: 15px; }
 .flip-card-front h3 { font-size: 1.5rem; color: var(--accent); margin-bottom: 10px; }
 .flip-card-front p { font-size: 0.95rem; color: #666; }
-
-/* Back specific */
 .flip-card-back {
     background-color: var(--card-front);
-    transform: rotateY(180deg); /* Start flipped so it's hidden */
+    transform: rotateY(180deg);
     border: 3px solid var(--accent);
     padding: 0;
 }
 .flip-card-back img { width: 100%; height: 100%; object-fit: cover; }
-.flip-card-back p { color: #666; font-size: 1rem; padding: 20px; }
+
+/* --- RETRO GAME CONSOLE STYLES --- */
+.game-section-runner {
+    padding: 60px 20px;
+    text-align: center;
+    background-color: #f4f1ea;
+    border-top: 2px dashed #E8D8B8;
+}
+.game-section-runner h2 {
+    font-size: 2.5rem;
+    color: var(--accent);
+    margin-bottom: 10px;
+}
+
+.game-console {
+    max-width: 850px;
+    margin: 30px auto;
+    background: #2c3e50; /* Dark gray console shell */
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.3), inset 0 2px 5px rgba(255,255,255,0.1);
+    border: 5px solid #1a252f;
+}
+.console-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px 15px 10px;
+    color: #ecf0f1;
+    font-family: monospace;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+.console-lights { display: flex; gap: 10px; }
+.light {
+    width: 15px; height: 15px; border-radius: 50%;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
+}
+.light.red { background: #e74c3c; }
+.light.yellow { background: #f1c40f; }
+.light.green { background: #2ecc71; }
+
+.screen-bezel {
+    background: #111;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
+    position: relative;
+}
+.game-stats {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background: #222;
+    color: #2ecc71; /* Retro green text */
+    font-family: monospace;
+    font-size: 1.2rem;
+    border-bottom: 2px solid #333;
+}
+#gameCanvas {
+    display: block;
+    background: #FDE2E4;
+    width: 100%;
+    height: auto;
+    border: 2px solid #333;
+}
+.game-over {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(255, 255, 255, 0.95);
+    padding: 30px 50px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    text-align: center;
+    border: 4px solid #E07A5F;
+}
+.game-over.hidden { display: none; }
+.game-over p { font-size: 2rem; color: #E07A5F; font-weight: bold; margin-bottom: 15px; }
+.game-over button {
+    background: #81B29A;
+    color: white;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    font-weight: bold;
+}
+.game-over button:hover { background: #5a8a73; }
+
+.console-bottom {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 40px 0 40px;
+}
+.d-pad { display: flex; flex-direction: column; align-items: center; gap: 5px; }
+.d-up, .d-down {
+    width: 40px; height: 40px;
+    background: #34495e;
+    color: #ecf0f1;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    box-shadow: 0 4px 0 #1a252f;
+}
+.action-buttons { display: flex; gap: 20px; }
+.btn-a, .btn-b {
+    width: 50px; height: 50px;
+    background: #e74c3c;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.5rem;
+    box-shadow: 0 5px 0 #c0392b;
+}
+.btn-b { background: #3498db; box-shadow: 0 5px 0 #2980b9; }
 
 footer { padding: 40px; background-color: #FDE2E4; color: var(--text); font-size: 0.9rem; margin-top: 40px; }
