@@ -142,7 +142,7 @@
         
         document.getElementById('runner-highscore').innerText = highScore;
         
-        // Keyboard Controls with Prevent Default (Stops page scrolling)
+        // Keyboard Controls (Prevents page scrolling)
         document.addEventListener('keydown', (e) => {
             if (e.code === 'Space' || e.code === 'ArrowUp' || e.code === 'ArrowDown') {
                 e.preventDefault();
@@ -182,6 +182,7 @@
                 obstacles = [];
                 isGameOver = false;
                 player.isCrouching = false;
+                document.getElementById('runner-score').innerText = runnerScore;
                 document.getElementById('game-over-message').classList.add('hidden');
                 runnerLoop();
             }
@@ -260,8 +261,8 @@
             
             // --- DRAW PLAYER (Lying Down vs Standing) ---
             if (player.isCrouching) {
-                // --- DRAWING CROUCHING PLAYER (FLAT ON FLOOR) ---
-                // Legs flat on ground (y = 240, height = 10)
+                // --- DRAWING CROUCHING PLAYER (FLAT ON GRASS) ---
+                // Legs flat on grass (y = 240, height = 10) -> bottom touches 250
                 ctx.fillStyle = '#3D405B';
                 ctx.fillRect(player.x + 10, player.y + 20, 20, 10);
                 
@@ -272,9 +273,9 @@
                 // Arm (y = 235, height = 8)
                 ctx.fillRect(player.x + 35, player.y + 15, 15, 8);
                 
-                // Head (Circular clip, center at 225)
+                // Head (Circular clip, center at 230, touching grass)
                 ctx.save();
-                let headY = player.y + 5;
+                let headY = player.y + 10;
                 let headX = player.x + 65;
                 ctx.beginPath();
                 ctx.arc(headX, headY, 18, 0, Math.PI * 2);
@@ -320,7 +321,7 @@
                 if (type === 'ground') {
                     obs.y = 230; // On the ground (must jump)
                 } else {
-                    obs.y = 180; // Lower air obstacle (must duck)
+                    obs.y = 200; // Lower air obstacle (must duck)
                 }
                 obstacles.push(obs);
             }
@@ -352,14 +353,13 @@
                     endRunnerGame();
                 }
                 
-                if (obs.x + obs.width < 0) obstacles.splice(index, 1);
+                // Score +1 when obstacle passes off-screen
+                if (obs.x + obs.width < 0) {
+                    obstacles.splice(index, 1);
+                    runnerScore++;
+                    document.getElementById('runner-score').innerText = runnerScore;
+                }
             });
-            
-            // --- UPDATE SCORE ---
-            if (!isGameOver && frames % 20 === 0 && runnerGameActive) {
-                runnerScore++;
-                document.getElementById('runner-score').innerText = runnerScore;
-            }
             
             frames++;
             requestAnimationFrame(runnerLoop);
