@@ -80,24 +80,43 @@
         </div>
     </section>
 
-    <!-- BENNET TV SECTION (Now above the game) -->
+    <!-- BENNET TV SECTION -->
     <section id="tv" class="tv-section">
         <h2>Bennet TV</h2>
         <p>Pick a channel to watch Bennet in action!</p>
         
-        <div class="tv-console">
-            <div class="tv-screen-bezel">
-                <video id="bennet-tv-player" controls>
-                    <source src="eating.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
-            </div>
+        <div class="tv-wrapper">
+            <!-- Antennas -->
+            <div class="antenna left"></div>
+            <div class="antenna right"></div>
             
-            <div class="tv-controls">
-                <button class="tv-btn active" onclick="changeChannel('eating.mp4', this)">🍽️ Eating</button>
-                <button class="tv-btn" onclick="changeChannel('on9.mp4', this)">👩 Woman Bennet</button>
-                <button class="tv-btn" onclick="changeChannel('kaka.mp4', this)">🐶 Kaka</button>
-                <button class="tv-btn" onclick="changeChannel('sleeping.mp4', this)">😴 Sleeping</button>
+            <div class="tv-console">
+                <div class="tv-screen-bezel">
+                    <video id="bennet-tv-player" controls>
+                        <source src="eating.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                
+                <!-- Control Panel inside the TV -->
+                <div class="tv-controls">
+                    <button class="tv-btn btn-eating active" onclick="changeChannel('eating.mp4', this)">
+                        <span class="btn-icon">🍽️</span>
+                        <span class="btn-text">Eating</span>
+                    </button>
+                    <button class="tv-btn btn-woman" onclick="changeChannel('on9.mp4', this)">
+                        <span class="btn-icon">👩</span>
+                        <span class="btn-text">Woman</span>
+                    </button>
+                    <button class="tv-btn btn-kaka" onclick="changeChannel('kaka.mp4', this)">
+                        <span class="btn-icon">🐶</span>
+                        <span class="btn-text">Kaka</span>
+                    </button>
+                    <button class="tv-btn btn-sleeping" onclick="changeChannel('sleeping.mp4', this)">
+                        <span class="btn-icon">😴</span>
+                        <span class="btn-text">Sleeping</span>
+                    </button>
+                </div>
             </div>
         </div>
     </section>
