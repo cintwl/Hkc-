@@ -89,7 +89,7 @@
     <!-- GAME SECTION: BENNET RUNNER -->
     <section id="game" class="game-section-runner">
         <h2>Bennet Runner</h2>
-        <p>Help Bennet jump over the obstacles! Press Spacebar or Tap the screen to jump.</p>
+        <p>Help Bennet jump over the obstacles! Press Spacebar or the Up Arrow to jump.</p>
         
         <div class="game-container">
             <div class="game-stats">
@@ -130,21 +130,21 @@
         let obstacles = [];
         let isGameOver = false;
         
-        // Bennet Character (Using head.jpg)
+        // Bennet Character Image
         const bennetImg = new Image();
         bennetImg.src = 'head.jpg'; 
         
         const player = {
-            x: 50, y: 200, width: 50, height: 50,
-            dy: 0, gravity: 0.6, jumpPower: -12, grounded: true
+            x: 50, y: 180, width: 60, height: 70,
+            dy: 0, gravity: 0.6, jumpPower: -13, grounded: true
         };
         
         // High Score display
         document.getElementById('runner-highscore').innerText = highScore;
         
-        // Controls
+        // Controls (Spacebar OR ArrowUp)
         document.addEventListener('keydown', (e) => {
-            if (e.code === 'Space' && player.grounded && !isGameOver) {
+            if ((e.code === 'Space' || e.code === 'ArrowUp') && player.grounded && !isGameOver) {
                 player.dy = player.jumpPower;
                 player.grounded = false;
                 startRunnerGame();
@@ -180,21 +180,67 @@
         function runnerLoop() {
             if (isGameOver) return;
             
+            // Clear canvas
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             
-            // Draw Ground
+            // --- DRAW FOREST BACKGROUND ---
+            // Sky
+            ctx.fillStyle = '#d4f1f4'; 
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Sun
+            ctx.fillStyle = '#FFD3B6';
+            ctx.beginPath();
+            ctx.arc(700, 50, 40, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Trees (static)
+            for(let i = 0; i < canvas.width; i += 150) {
+                // Trunk
+                ctx.fillStyle = '#6B4226';
+                ctx.fillRect(i + 30, 180, 20, 70);
+                // Leaves
+                ctx.fillStyle = '#4CAF50';
+                ctx.beginPath();
+                ctx.arc(i + 40, 160, 40, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            
+            // Ground
             ctx.fillStyle = '#81B29A';
             ctx.fillRect(0, 250, canvas.width, 50);
             
-            // Draw Player (Bennet)
-            if (bennetImg.complete) {
-                ctx.drawImage(bennetImg, player.x, player.y, player.width, player.height);
-            } else {
-                ctx.fillStyle = '#E07A5F';
-                ctx.fillRect(player.x, player.y, player.width, player.height);
-            }
+            // --- DRAW PLAYER (Bennet with Body) ---
+            // Draw Legs
+            ctx.fillStyle = '#3D405B'; // Dark pants
+            ctx.fillRect(player.x + 15, player.y + 50, 10, 20); // Left leg
+            ctx.fillRect(player.x + 35, player.y + 50, 10, 20); // Right leg
+
+            // Draw Body
+            ctx.fillStyle = '#E07A5F'; // Warm shirt
+            ctx.fillRect(player.x + 10, player.y + 25, 40, 25); // Torso
+
+            // Draw Arms
+            ctx.fillRect(player.x - 5, player.y + 30, 15, 10); // Left arm
+            ctx.fillRect(player.x + 50, player.y + 30, 15, 10); // Right arm
+
+            // Draw Head (Circular clip to hide black background)
+            ctx.save();
+            ctx.beginPath();
+            ctx.arc(player.x + 30, player.y + 15, 22, 0, Math.PI * 2); // Circle shape
+            ctx.clip(); // Everything drawn after this is cropped to the circle
             
-            // Player Physics
+            if (bennetImg.complete) {
+                // Draw image centered inside the circle
+                ctx.drawImage(bennetImg, player.x + 5, player.y - 10, 50, 50);
+            } else {
+                // Fallback if image isn't loaded
+                ctx.fillStyle = '#F4D03F';
+                ctx.fill();
+            }
+            ctx.restore(); // End the circular crop
+            
+            // --- PLAYER PHYSICS ---
             player.y += player.dy;
             if (player.y + player.height < 250) {
                 player.dy += player.gravity;
@@ -205,7 +251,7 @@
                 player.grounded = true;
             }
             
-            // Spawn Obstacles
+            // --- SPAWN OBSTACLES ---
             if (frames % 90 === 0 && runnerGameActive) {
                 obstacles.push({
                     x: canvas.width,
@@ -216,7 +262,7 @@
                 });
             }
             
-            // Draw and Move Obstacles
+            // --- DRAW AND MOVE OBSTACLES ---
             obstacles.forEach((obs, index) => {
                 obs.x -= obs.speed;
                 ctx.fillStyle = '#E07A5F';
@@ -236,7 +282,7 @@
                 if (obs.x + obs.width < 0) obstacles.splice(index, 1);
             });
             
-            // Update Score
+            // --- UPDATE SCORE ---
             if (frames % 10 === 0 && runnerGameActive) {
                 runnerScore++;
                 document.getElementById('runner-score').innerText = runnerScore;
