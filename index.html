@@ -142,9 +142,8 @@
         
         document.getElementById('runner-highscore').innerText = highScore;
         
-        // Keyboard Controls with Prevent Default
+        // Keyboard Controls with Prevent Default (Stops page scrolling)
         document.addEventListener('keydown', (e) => {
-            // Prevent the page from scrolling when using Space, Up, or Down arrows
             if (e.code === 'Space' || e.code === 'ArrowUp' || e.code === 'ArrowDown') {
                 e.preventDefault();
             }
@@ -260,55 +259,68 @@
             }
             
             // --- DRAW PLAYER (Lying Down vs Standing) ---
-            // Draw Legs
-            ctx.fillStyle = '#3D405B';
             if (player.isCrouching) {
-                ctx.fillRect(player.x + 10, player.y + 15, 20, 10); 
+                // --- DRAWING CROUCHING PLAYER (FLAT ON FLOOR) ---
+                // Legs flat on ground (y = 240, height = 10)
+                ctx.fillStyle = '#3D405B';
+                ctx.fillRect(player.x + 10, player.y + 20, 20, 10);
+                
+                // Body flat (y = 230, height = 15)
+                ctx.fillStyle = '#E07A5F';
+                ctx.fillRect(player.x + 25, player.y + 10, 35, 15);
+                
+                // Arm (y = 235, height = 8)
+                ctx.fillRect(player.x + 35, player.y + 15, 15, 8);
+                
+                // Head (Circular clip, center at 225)
+                ctx.save();
+                let headY = player.y + 5;
+                let headX = player.x + 65;
+                ctx.beginPath();
+                ctx.arc(headX, headY, 18, 0, Math.PI * 2);
+                ctx.clip();
+                if (bennetImg.complete) {
+                    ctx.drawImage(bennetImg, headX - 20, headY - 20, 40, 40);
+                } else {
+                    ctx.fillStyle = '#F4D03F';
+                    ctx.fill();
+                }
+                ctx.restore();
             } else {
+                // --- DRAWING STANDING PLAYER ---
+                ctx.fillStyle = '#3D405B';
                 ctx.fillRect(player.x + 15, player.y + 50, 10, 20); 
                 ctx.fillRect(player.x + 35, player.y + 50, 10, 20);
-            }
-
-            // Draw Body
-            ctx.fillStyle = '#E07A5F';
-            if (player.isCrouching) {
-                ctx.fillRect(player.x + 25, player.y + 10, 35, 15); 
-            } else {
+                
+                ctx.fillStyle = '#E07A5F';
                 ctx.fillRect(player.x + 10, player.y + 25, 40, 25); 
-            }
-
-            // Draw Arms
-            if (player.isCrouching) {
-                ctx.fillRect(player.x + 35, player.y + 5, 15, 8);
-            } else {
+                
                 ctx.fillRect(player.x - 5, player.y + 30, 15, 10);
                 ctx.fillRect(player.x + 50, player.y + 30, 15, 10);
+                
+                ctx.save();
+                let headY = player.y + 15;
+                let headX = player.x + 30;
+                ctx.beginPath();
+                ctx.arc(headX, headY, 18, 0, Math.PI * 2);
+                ctx.clip();
+                if (bennetImg.complete) {
+                    ctx.drawImage(bennetImg, headX - 20, headY - 20, 40, 40);
+                } else {
+                    ctx.fillStyle = '#F4D03F';
+                    ctx.fill();
+                }
+                ctx.restore();
             }
-
-            // Draw Head (Circular clip)
-            ctx.save();
-            let headY = player.isCrouching ? player.y + 5 : player.y + 15;
-            let headX = player.isCrouching ? player.x + 65 : player.x + 30;
-            ctx.beginPath();
-            ctx.arc(headX, headY, 18, 0, Math.PI * 2);
-            ctx.clip();
-            
-            if (bennetImg.complete) {
-                ctx.drawImage(bennetImg, headX - 20, headY - 20, 40, 40);
-            } else {
-                ctx.fillStyle = '#F4D03F';
-                ctx.fill();
-            }
-            ctx.restore();
             
             // --- SPAWN OBSTACLES ---
             if (!isGameOver && frames % 100 === 0 && runnerGameActive) {
                 let type = Math.random() > 0.5 ? 'ground' : 'air';
                 let obs = { x: canvas.width, width: 20, height: 20, speed: 6, type: type };
                 if (type === 'ground') {
-                    obs.y = 230; 
+                    obs.y = 230; // On the ground (must jump)
                 } else {
-                    obs.y = 140; 
+                    obs.y = 180; // Lower air obstacle (must duck)
                 }
                 obstacles.push(obs);
             }
