@@ -14,6 +14,7 @@
         <a href="#cards">Get to Know Him</a>
         <a href="#tv">Bennet TV</a>
         <a href="#game">Play Game</a>
+        <a href="#mystery">Surprise!</a>
     </nav>
 
     <!-- HERO SECTION -->
@@ -86,7 +87,6 @@
         <p>Pick a channel to watch Bennet in action!</p>
         
         <div class="tv-wrapper">
-            <!-- Antennas -->
             <div class="antenna left"></div>
             <div class="antenna right"></div>
             
@@ -98,7 +98,6 @@
                     </video>
                 </div>
                 
-                <!-- Control Panel inside the TV -->
                 <div class="tv-controls">
                     <button class="tv-btn btn-eating active" onclick="changeChannel('eating.mp4', this)">
                         <span class="btn-icon">🍽️</span>
@@ -150,6 +149,27 @@
         </div>
     </section>
 
+    <!-- MYSTERY GIFT BOX SECTION -->
+    <section id="mystery" class="mystery-section">
+        <h2>A Little Surprise</h2>
+        <p>Warning: Contains high levels of cuteness. Open at your own risk.</p>
+        
+        <div class="gift-container" id="gift-box" onclick="openGift()">
+            <div class="gift-lid"></div>
+            <div class="gift-box-body"></div>
+            <div class="gift-ribbon-v"></div>
+            <div class="gift-ribbon-h"></div>
+            <div class="gift-bow"></div>
+        </div>
+
+        <div class="mystery-video-container hidden" id="mystery-video">
+            <video controls autoplay>
+                <source src="cute.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+    </section>
+
     <footer>
         <p>Made with love and a lot of laughter ❤️</p>
     </footer>
@@ -174,6 +194,22 @@
             btn.classList.add('active');
         }
 
+        // --- MYSTERY GIFT BOX LOGIC ---
+        function openGift() {
+            const gift = document.getElementById('gift-box');
+            const video = document.getElementById('mystery-video');
+            
+            if (gift.classList.contains('open')) return;
+            
+            gift.classList.add('shake');
+            
+            setTimeout(() => {
+                gift.classList.remove('shake');
+                gift.classList.add('open');
+                video.classList.remove('hidden');
+            }, 500);
+        }
+
         // --- BENNET RUNNER GAME LOGIC ---
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
@@ -195,7 +231,6 @@
         
         document.getElementById('runner-highscore').innerText = highScore;
         
-        // Keyboard Controls with Prevent Default (Stops page scrolling)
         document.addEventListener('keydown', (e) => {
             if (e.code === 'Space' || e.code === 'ArrowUp' || e.code === 'ArrowDown') {
                 e.preventDefault();
@@ -217,7 +252,6 @@
             }
         });
         
-        // Touch Controls
         canvas.addEventListener('touchstart', (e) => {
             e.preventDefault();
             if (player.grounded && !isGameOver) {
@@ -251,11 +285,9 @@
             
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             
-            // Draw Sky
             ctx.fillStyle = '#d4f1f4'; 
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             
-            // Draw Sun
             ctx.fillStyle = '#FFD700';
             ctx.beginPath();
             ctx.arc(700, 50, 30, 0, Math.PI * 2);
@@ -270,7 +302,6 @@
                 ctx.stroke();
             }
             
-            // Draw Trees
             for(let i = 0; i < canvas.width; i += 150) {
                 ctx.fillStyle = '#6B4226';
                 ctx.fillRect(i + 30, 180, 20, 70);
@@ -280,11 +311,9 @@
                 ctx.fill();
             }
             
-            // Draw Ground
             ctx.fillStyle = '#81B29A';
             ctx.fillRect(0, 250, canvas.width, 50);
             
-            // --- PLAYER PHYSICS & ANIMATION ---
             if (!isGameOver) {
                 if (player.isCrouching && player.grounded) {
                     player.height = 20;
@@ -313,9 +342,7 @@
                 }
             }
             
-            // --- DRAW PLAYER (Lying Down vs Standing) ---
             if (player.isCrouching) {
-                // Drawing Crouching Player (Flat on grass)
                 ctx.fillStyle = '#3D405B';
                 ctx.fillRect(player.x + 10, player.y + 15, 20, 5);
                 
@@ -337,7 +364,6 @@
                 }
                 ctx.restore();
             } else {
-                // Drawing Standing Player
                 ctx.fillStyle = '#3D405B';
                 ctx.fillRect(player.x + 15, player.y + 50, 10, 20); 
                 ctx.fillRect(player.x + 35, player.y + 50, 10, 20);
@@ -363,7 +389,6 @@
                 ctx.restore();
             }
             
-            // --- SPAWN OBSTACLES ---
             if (!isGameOver && frames % 100 === 0 && runnerGameActive) {
                 let type = Math.random() > 0.5 ? 'ground' : 'air';
                 let obs = { x: canvas.width, width: 20, height: 20, speed: 6, type: type };
@@ -375,7 +400,6 @@
                 obstacles.push(obs);
             }
             
-            // --- DRAW AND MOVE OBSTACLES ---
             obstacles.forEach((obs, index) => {
                 obs.x -= obs.speed;
                 
@@ -393,7 +417,6 @@
                     ctx.fill();
                 }
                 
-                // Collision Detection
                 if (!isGameOver && 
                     player.x < obs.x + obs.width &&
                     player.x + player.width > obs.x &&
@@ -402,7 +425,6 @@
                     endRunnerGame();
                 }
                 
-                // Score +1 when obstacle passes off-screen
                 if (obs.x + obs.width < 0) {
                     obstacles.splice(index, 1);
                     runnerScore++;
