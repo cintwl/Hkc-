@@ -302,7 +302,7 @@ nav a:hover { color: var(--accent); }
 }
 .game-over button:hover { background: #5a8a73; }
 
-/* --- MYSTERY GIFT BOX STYLES (BEAUTIFUL CARTOON STYLE) --- */
+/* --- MYSTERY GIFT BOX STYLES --- */
 .mystery-section {
     padding: 80px 20px;
     text-align: center;
@@ -312,20 +312,23 @@ nav a:hover { color: var(--accent); }
 .mystery-section h2 {
     font-size: 2.5rem;
     color: var(--accent);
-    margin-bottom: 10px;
-}
-.mystery-section p {
-    font-size: 1.1rem;
-    color: #666;
     margin-bottom: 40px;
-    font-style: italic;
 }
 
+/* Center everything in a fixed-height area to prevent jumping */
+.mystery-display-area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 250px; /* Fits the gift and video nicely */
+    margin: 0 auto;
+}
+
+/* The Gift Box */
 .gift-container {
     position: relative;
     width: 220px;
     height: 220px;
-    margin: 0 auto;
     cursor: pointer;
     transition: transform 0.2s;
 }
@@ -345,7 +348,6 @@ nav a:hover { color: var(--accent); }
     100% { transform: rotate(0deg); }
 }
 
-/* Beautiful Red Gift Box with Gold Ribbon */
 .gift-box-body {
     position: absolute;
     bottom: 0;
@@ -434,10 +436,10 @@ nav a:hover { color: var(--accent); }
     opacity: 0;
 }
 
-/* Video Size (Matches the Gift Box) */
+/* The Video (Smaller size, replaces the gift) */
 .mystery-video-container {
-    max-width: 250px; /* Same width as the gift */
-    margin: 30px auto 0 auto;
+    max-width: 220px; /* Same width as the gift */
+    margin: 0 auto;
     border-radius: 15px;
     overflow: hidden;
     box-shadow: 0 10px 30px rgba(0,0,0,0.2);
@@ -451,17 +453,21 @@ nav a:hover { color: var(--accent); }
     display: block;
 }
 
-/* --- FLICKERING WARNING MESSAGE --- */
+/* --- FLICKERING WARNING MESSAGE (Replaces the gift) --- */
 .warning-message {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 220px;
+    height: 180px;
     color: #e74c3c;
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     font-weight: bold;
-    margin: 20px auto;
-    padding: 15px;
-    border: 3px dashed #e74c3c;
-    border-radius: 10px;
+    padding: 20px;
+    border: 4px dashed #e74c3c;
+    border-radius: 15px;
     background: rgba(231, 76, 60, 0.1);
-    max-width: 350px;
+    text-transform: uppercase;
 }
 .warning-message.hidden {
     display: none;
