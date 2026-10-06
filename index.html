@@ -142,7 +142,7 @@
         
         document.getElementById('runner-highscore').innerText = highScore;
         
-        // Keyboard Controls (Prevents page scrolling)
+        // Keyboard Controls with Prevent Default (Stops page scrolling)
         document.addEventListener('keydown', (e) => {
             if (e.code === 'Space' || e.code === 'ArrowUp' || e.code === 'ArrowDown') {
                 e.preventDefault();
@@ -234,8 +234,10 @@
             // --- PLAYER PHYSICS & ANIMATION ---
             if (!isGameOver) {
                 if (player.isCrouching && player.grounded) {
-                    player.height = 30;
+                    // INSTANT SNAP TO LYING POSITION
+                    player.height = 20;
                     player.width = 70;
+                    player.y = 250 - player.height; // Snap to grass
                 } else {
                     player.height = 70;
                     player.width = 60;
@@ -262,18 +264,18 @@
             // --- DRAW PLAYER (Lying Down vs Standing) ---
             if (player.isCrouching) {
                 // --- DRAWING CROUCHING PLAYER (FLAT ON GRASS) ---
-                // Legs flat on grass (y = 240, height = 10) -> bottom touches 250
+                // Legs flat on grass (bottom touches 250)
                 ctx.fillStyle = '#3D405B';
-                ctx.fillRect(player.x + 10, player.y + 20, 20, 10);
+                ctx.fillRect(player.x + 10, player.y + 15, 20, 5);
                 
-                // Body flat (y = 230, height = 15)
+                // Body flat (touching grass)
                 ctx.fillStyle = '#E07A5F';
-                ctx.fillRect(player.x + 25, player.y + 10, 35, 15);
+                ctx.fillRect(player.x + 25, player.y + 10, 35, 10);
                 
-                // Arm (y = 235, height = 8)
-                ctx.fillRect(player.x + 35, player.y + 15, 15, 8);
+                // Arm flat
+                ctx.fillRect(player.x + 35, player.y + 10, 15, 8);
                 
-                // Head (Circular clip, center at 230, touching grass)
+                // Head (Circular clip, center at 240)
                 ctx.save();
                 let headY = player.y + 10;
                 let headX = player.x + 65;
@@ -321,7 +323,7 @@
                 if (type === 'ground') {
                     obs.y = 230; // On the ground (must jump)
                 } else {
-                    obs.y = 200; // Lower air obstacle (must duck)
+                    obs.y = 170; // Higher air obstacle (must duck)
                 }
                 obstacles.push(obs);
             }
