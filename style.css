@@ -306,7 +306,7 @@ nav a:hover { color: var(--accent); }
 .mystery-section {
     padding: 80px 20px;
     text-align: center;
-    background: linear-gradient(135deg, #FFF8E7 0%, #FDE2E4 100%); /* Restored original warm gradient */
+    background: linear-gradient(135deg, #FFF8E7 0%, #FDE2E4 100%); /* Warm gradient restored */
     border-top: 2px dashed #E8D8B8;
 }
 .mystery-section h2 {
@@ -435,14 +435,33 @@ nav a:hover { color: var(--accent); }
     opacity: 0;
 }
 
-/* The Video (Smaller & Sharper Border) */
+/* The Video (Smaller & Sharper Border with Sparkle Decorations) */
 .mystery-video-container {
-    max-width: 180px; /* Smaller size as requested */
+    position: relative;
+    max-width: 180px; /* Smaller size */
     margin: 0 auto;
     border-radius: 10px;
-    overflow: hidden;
+    overflow: visible; /* Allow decorations to overflow */
     box-shadow: 0 10px 20px rgba(0,0,0,0.2);
     border: 4px solid #d32f2f;
+}
+.mystery-video-container::before {
+    content: '✨';
+    position: absolute;
+    top: -15px; left: -15px;
+    font-size: 1.5rem;
+    animation: float 2s infinite ease-in-out;
+}
+.mystery-video-container::after {
+    content: '✨';
+    position: absolute;
+    bottom: -15px; right: -15px;
+    font-size: 1.5rem;
+    animation: float 2s infinite ease-in-out reverse;
+}
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
 }
 .mystery-video-container.hidden {
     display: none;
@@ -450,21 +469,19 @@ nav a:hover { color: var(--accent); }
 .mystery-video-container video {
     width: 100%;
     display: block;
+    border-radius: 6px;
 }
 
-/* --- FLICKERING WARNING MESSAGE --- */
+/* --- FLICKERING WARNING MESSAGE (One Line) --- */
 .warning-message {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 220px;
-    height: 180px;
+    display: inline-block;
+    white-space: nowrap;
     color: #b71c1c;
-    font-size: 1.3rem;
+    font-size: 1rem; /* Adjusted to fit on one line */
     font-weight: bold;
-    padding: 20px;
-    border: 4px dashed #b71c1c;
-    border-radius: 15px;
+    padding: 10px 20px;
+    border: 3px dashed #b71c1c;
+    border-radius: 10px;
     background: rgba(183, 28, 28, 0.1);
     text-transform: uppercase;
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
@@ -480,4 +497,23 @@ nav a:hover { color: var(--accent); }
     100% { opacity: 0.2; }
 }
 
-footer { padding: 40px; background-color: #FDE2E4; color: var(--text); font-size: 0.9rem; margin-top: 40px; }
+/* --- BEAUTIFUL FLICKERING FOOTER --- */
+footer {
+    padding: 40px;
+    background-color: #FDE2E4;
+    color: #E07A5F;
+    font-size: 2rem;
+    font-weight: bold;
+    margin-top: 40px;
+    animation: flickerFooter 1.5s infinite alternate;
+}
+@keyframes flickerFooter {
+    0% { 
+        opacity: 1; 
+        text-shadow: 0 0 10px rgba(224, 122, 95, 0.5); 
+    }
+    100% { 
+        opacity: 0.7; 
+        text-shadow: 0 0 20px rgba(224, 122, 95, 0.9), 0 0 30px rgba(224, 122, 95, 0.6); 
+    }
+}
