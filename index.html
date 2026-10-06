@@ -151,7 +151,7 @@
 
     <!-- MYSTERY GIFT BOX SECTION -->
     <section id="mystery" class="mystery-section">
-        <h2>A Little Surprise</h2>
+        <h2 id="mystery-title">A Little Surprise</h2>
         
         <div class="mystery-display-area">
             <!-- The Gift Box -->
@@ -179,7 +179,7 @@
     </section>
 
     <footer>
-        <p>Made with love and a lot of laughter ❤️</p>
+        <p>love u</p>
     </footer>
 
     <script>
@@ -208,6 +208,7 @@
             const warning = document.getElementById('warning-message');
             const videoContainer = document.getElementById('mystery-video');
             const video = videoContainer.querySelector('video');
+            const title = document.getElementById('mystery-title');
 
             // Prevent clicking if the sequence is already running
             if (gift.style.display === 'none') return; 
@@ -220,9 +221,10 @@
                 gift.classList.remove('shake');
                 gift.classList.add('open');
 
-                // 3. Hide the gift completely and show the warning
+                // 3. Hide the gift completely, hide the title, and show the warning
                 setTimeout(() => {
                     gift.style.display = 'none'; 
+                    title.style.display = 'none'; // Hide the "A Little Surprise" title
                     warning.classList.remove('hidden');
                     warning.classList.add('flicker');
 
@@ -240,6 +242,7 @@
                             videoContainer.classList.add('hidden');
                             gift.style.display = 'block'; // Bring the gift back
                             gift.classList.remove('open');
+                            title.style.display = 'block'; // Bring the title back
                         };
                     }, 2500); // Warning shows for 2.5 seconds
 
