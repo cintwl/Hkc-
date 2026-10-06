@@ -206,7 +206,7 @@
 
             if (input === correctPassword) {
                 document.getElementById('password-screen').style.display = 'none';
-                document.getElementById('website-content').classList.remove('hidden');
+                        document.getElementById('website-content').style.display = 'block';
             } else {
                 document.getElementById('error-message').innerText = "Incorrect password. Try again.";
                 document.getElementById('password-input').value = '';
