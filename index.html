@@ -1,1 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get to Know Bennet</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
+    <!-- NAVIGATION -->
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#cards">Get to Know Him</a>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <header id="home" class="hero-section">
+        <h1>Get to Know Bennet</h1>
+        <p>Welcome to my cozy little corner of the internet. Click on a card to flip it over and see a piece of Bennet's world.</p>
+        <div class="scroll-indicator">↓ Scroll Down ↓</div>
+    </header>
+
+    <!-- INTERACTIVE CARDS SECTION -->
+    <section id="cards" class="cards-section">
+        <h2>His Favorite Things</h2>
+        <p class="subtitle">Go ahead — click a card. I double dare you. 😜</p>
+
+        <div class="cards-grid">
+            <!-- Card 1: Football -->
+            <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <span class="icon">⚽</span>
+                        <h3>Football</h3>
+                        <p>His glorious football highlights</p>
+                    </div>
+                    <div class="flip-card-back">
+                        <!-- Replace 'football.jpg' with your actual image file name -->
+                        <img src="football.jpg" alt="Bennet playing football">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2: Winnie the Pooh -->
+            <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <span class="icon">🐻</span>
+                        <h3>Winnie the Pooh</h3>
+                        <p>A gallery of adorable photos</p>
+                    </div>
+                    <div class="flip-card-back">
+                        <!-- Replace 'winnie.jpg' with your actual image file name -->
+                        <img src="winnie.jpg" alt="Winnie the Pooh">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 3: Kaka the Dog -->
+            <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <span class="icon">🐶</span>
+                        <h3>Kaka</h3>
+                        <p>The cutest dog in the world</p>
+                    </div>
+                    <div class="flip-card-back">
+                        <!-- Replace 'kaka.jpg' with your actual image file name -->
+                        <img src="kaka.jpg" alt="Kaka the dog">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 4: Videos -->
+            <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <span class="icon">🎥</span>
+                        <h3>Videos</h3>
+                        <p>Watch him in action</p>
+                    </div>
+                    <div class="flip-card-back">
+                        <p>Video coming soon! (I'll add it here)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>Made with love and a lot of laughter ❤️</p>
+    </footer>
+
+</body>
+</html>
