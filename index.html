@@ -162,8 +162,13 @@
             <div class="gift-bow"></div>
         </div>
 
+        <!-- Flickering Warning Message -->
+        <div id="warning-message" class="warning-message hidden">
+            ⚠️ WARNING: EXTREME CUTENESS DETECTED ⚠️
+        </div>
+
         <div class="mystery-video-container hidden" id="mystery-video">
-            <video controls autoplay>
+            <video controls>
                 <source src="cute.mp4" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
@@ -194,20 +199,40 @@
             btn.classList.add('active');
         }
 
-        // --- MYSTERY GIFT BOX LOGIC ---
+        // --- MYSTERY GIFT BOX LOGIC (With Flickering Warning) ---
         function openGift() {
             const gift = document.getElementById('gift-box');
-            const video = document.getElementById('mystery-video');
-            
-            if (gift.classList.contains('open')) return;
-            
+            const warning = document.getElementById('warning-message');
+            const videoContainer = document.getElementById('mystery-video');
+
+            if (gift.classList.contains('open')) return; // Prevent multiple clicks
+
+            // 1. Shake the box
             gift.classList.add('shake');
-            
+
+            // 2. Open the box after shaking
             setTimeout(() => {
                 gift.classList.remove('shake');
                 gift.classList.add('open');
-                video.classList.remove('hidden');
-            }, 500);
+
+                // 3. Show the flickering warning
+                warning.classList.remove('hidden');
+                warning.classList.add('flicker');
+
+                // 4. Hide warning and reveal video
+                setTimeout(() => {
+                    warning.classList.add('hidden');
+                    warning.classList.remove('flicker');
+                    videoContainer.classList.remove('hidden');
+                    
+                    // Auto-play the video
+                    const video = videoContainer.querySelector('video');
+                    if (video) {
+                        video.play().catch(e => console.log("Auto-play blocked:", e));
+                    }
+                }, 2500); // Warning shows for 2.5 seconds
+
+            }, 500); // Shake lasts for 0.5 seconds
         }
 
         // --- BENNET RUNNER GAME LOGIC ---
