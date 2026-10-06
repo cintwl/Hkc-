@@ -12,6 +12,7 @@
     <nav>
         <a href="#home">Home</a>
         <a href="#cards">Get to Know Him</a>
+        <a href="#game">Play Game</a>
     </nav>
 
     <!-- HERO SECTION -->
@@ -36,7 +37,6 @@
                         <p>Something special about QQ</p>
                     </div>
                     <div class="flip-card-back">
-                        <!-- Using your real uploaded image -->
                         <img src="qq.jpg" alt="QQ">
                     </div>
                 </div>
@@ -51,7 +51,6 @@
                         <p>A gallery of adorable photos</p>
                     </div>
                     <div class="flip-card-back">
-                        <!-- Using your real uploaded image -->
                         <img src="winnie.jpg" alt="Winnie the Pooh">
                     </div>
                 </div>
@@ -66,7 +65,6 @@
                         <p>The cutest dog in the world</p>
                     </div>
                     <div class="flip-card-back">
-                        <!-- Using your real uploaded image -->
                         <img src="kaka.jpg" alt="Kaka the dog">
                     </div>
                 </div>
@@ -81,10 +79,27 @@
                         <p>His grumpy face</p>
                     </div>
                     <div class="flip-card-back">
-                        <!-- Using your real uploaded image -->
                         <img src="angry.jpg" alt="Angry Bennet">
                     </div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GAME SECTION: BENNET RUNNER -->
+    <section id="game" class="game-section-runner">
+        <h2>Bennet Runner</h2>
+        <p>Help Bennet jump over the obstacles! Press Spacebar or Tap the screen to jump.</p>
+        
+        <div class="game-container">
+            <div class="game-stats">
+                <span>Score: <span id="runner-score">0</span></span>
+                <span>High Score: <span id="runner-highscore">0</span></span>
+            </div>
+            <canvas id="gameCanvas" width="800" height="300"></canvas>
+            <div id="game-over-message" class="game-over hidden">
+                <p>Game Over!</p>
+                <button onclick="resetRunnerGame()">Try Again</button>
             </div>
         </div>
     </section>
@@ -93,14 +108,160 @@
         <p>Made with love and a lot of laughter ❤️</p>
     </footer>
 
-    <!-- JAVASCRIPT TO MAKE THE CARDS FLIP -->
+    <!-- JAVASCRIPT FOR CARDS AND GAME -->
     <script>
+        // --- FLIP CARD LOGIC ---
         const cards = document.querySelectorAll('.flip-card');
         cards.forEach(card => {
             card.addEventListener('click', () => {
                 card.classList.toggle('is-flipped');
             });
         });
+
+        // --- BENNET RUNNER GAME LOGIC ---
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        // Game State
+        let runnerGameActive = false;
+        let runnerScore = 0;
+        let highScore = localStorage.getItem('bennetHighScore') || 0;
+        let frames = 0;
+        let obstacles = [];
+        let isGameOver = false;
+        
+        // Bennet Character (Using head.jpg)
+        const bennetImg = new Image();
+        bennetImg.src = 'head.jpg'; 
+        
+        const player = {
+            x: 50, y: 200, width: 50, height: 50,
+            dy: 0, gravity: 0.6, jumpPower: -12, grounded: true
+        };
+        
+        // High Score display
+        document.getElementById('runner-highscore').innerText = highScore;
+        
+        // Controls
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Space' && player.grounded && !isGameOver) {
+                player.dy = player.jumpPower;
+                player.grounded = false;
+                startRunnerGame();
+            }
+        });
+        
+        canvas.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            if (player.grounded && !isGameOver) {
+                player.dy = player.jumpPower;
+                player.grounded = false;
+                startRunnerGame();
+            }
+        });
+
+        function startRunnerGame() {
+            if (!runnerGameActive) {
+                runnerGameActive = true;
+                runnerScore = 0;
+                frames = 0;
+                obstacles = [];
+                isGameOver = false;
+                document.getElementById('game-over-message').classList.add('hidden');
+                runnerLoop();
+            }
+        }
+        
+        function resetRunnerGame() {
+            isGameOver = false;
+            startRunnerGame();
+        }
+
+        function runnerLoop() {
+            if (isGameOver) return;
+            
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Draw Ground
+            ctx.fillStyle = '#81B29A';
+            ctx.fillRect(0, 250, canvas.width, 50);
+            
+            // Draw Player (Bennet)
+            if (bennetImg.complete) {
+                ctx.drawImage(bennetImg, player.x, player.y, player.width, player.height);
+            } else {
+                ctx.fillStyle = '#E07A5F';
+                ctx.fillRect(player.x, player.y, player.width, player.height);
+            }
+            
+            // Player Physics
+            player.y += player.dy;
+            if (player.y + player.height < 250) {
+                player.dy += player.gravity;
+                player.grounded = false;
+            } else {
+                player.y = 250 - player.height;
+                player.dy = 0;
+                player.grounded = true;
+            }
+            
+            // Spawn Obstacles
+            if (frames % 90 === 0 && runnerGameActive) {
+                obstacles.push({
+                    x: canvas.width,
+                    y: 230,
+                    width: 20,
+                    height: 20,
+                    speed: 5
+                });
+            }
+            
+            // Draw and Move Obstacles
+            obstacles.forEach((obs, index) => {
+                obs.x -= obs.speed;
+                ctx.fillStyle = '#E07A5F';
+                ctx.beginPath();
+                ctx.arc(obs.x + 10, obs.y + 10, 10, 0, Math.PI * 2); // Circle obstacle
+                ctx.fill();
+                
+                // Collision Detection
+                if (player.x < obs.x + obs.width &&
+                    player.x + player.width > obs.x &&
+                    player.y < obs.y + obs.height &&
+                    player.y + player.height > obs.y) {
+                    endRunnerGame();
+                }
+                
+                // Remove off-screen obstacles
+                if (obs.x + obs.width < 0) obstacles.splice(index, 1);
+            });
+            
+            // Update Score
+            if (frames % 10 === 0 && runnerGameActive) {
+                runnerScore++;
+                document.getElementById('runner-score').innerText = runnerScore;
+            }
+            
+            frames++;
+            requestAnimationFrame(runnerLoop);
+        }
+
+        function endRunnerGame() {
+            isGameOver = true;
+            runnerGameActive = false;
+            document.getElementById('game-over-message').classList.remove('hidden');
+            
+            // Check for New High Score
+            if (runnerScore > highScore) {
+                highScore = runnerScore;
+                localStorage.setItem('bennetHighScore', highScore);
+                document.getElementById('runner-highscore').innerText = highScore;
+                
+                // Bennet Happy Jump Animation
+                player.dy = -20;
+                setTimeout(() => { player.dy = 0; player.y = 250 - player.height; }, 500);
+            }
+        }
     </script>
 </body>
 </html>
