@@ -302,7 +302,7 @@ nav a:hover { color: var(--accent); }
 }
 .game-over button:hover { background: #5a8a73; }
 
-/* --- MYSTERY GIFT BOX STYLES --- */
+/* --- MYSTERY GIFT BOX STYLES (BEAUTIFUL CARTOON STYLE) --- */
 .mystery-section {
     padding: 80px 20px;
     text-align: center;
@@ -345,15 +345,16 @@ nav a:hover { color: var(--accent); }
     100% { transform: rotate(0deg); }
 }
 
+/* Beautiful Red Gift Box with Gold Ribbon */
 .gift-box-body {
     position: absolute;
     bottom: 0;
     left: 0;
     width: 100%;
     height: 150px;
-    background: linear-gradient(135deg, #e76f51, #d64b36);
+    background: linear-gradient(135deg, #ff4d4d, #cc0000);
     border-radius: 0 0 10px 10px;
-    box-shadow: inset 0 5px 10px rgba(0,0,0,0.1);
+    box-shadow: inset 0 5px 10px rgba(0,0,0,0.1), 0 5px 15px rgba(0,0,0,0.2);
 }
 .gift-lid {
     position: absolute;
@@ -361,11 +362,11 @@ nav a:hover { color: var(--accent); }
     left: -10px;
     width: 240px;
     height: 45px;
-    background: linear-gradient(135deg, #f08a6a, #e76f51);
+    background: linear-gradient(135deg, #ff6666, #e60000);
     border-radius: 8px;
     z-index: 2;
     transition: all 0.5s ease;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.15);
 }
 .gift-container.open .gift-lid {
     top: -80px;
@@ -378,8 +379,9 @@ nav a:hover { color: var(--accent); }
     left: 95px;
     width: 30px;
     height: 150px;
-    background: linear-gradient(90deg, #f4a261, #e9c46a, #f4a261);
+    background: linear-gradient(90deg, #ffd700, #ffb300, #ffd700);
     z-index: 1;
+    box-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
 }
 .gift-ribbon-h {
     position: absolute;
@@ -387,21 +389,22 @@ nav a:hover { color: var(--accent); }
     left: 0;
     width: 220px;
     height: 35px;
-    background: linear-gradient(0deg, #f4a261, #e9c46a, #f4a261);
+    background: linear-gradient(0deg, #ffd700, #ffb300, #ffd700);
     z-index: 1;
+    box-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
 }
 .gift-bow {
     position: absolute;
-    top: -10px;
+    top: -15px;
     left: 50%;
     transform: translateX(-50%);
     width: 70px;
     height: 30px;
-    background: #f4a261;
+    background: #ffd700;
     border-radius: 50%;
     z-index: 3;
     transition: all 0.5s ease;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
 }
 .gift-bow::before {
     content: '';
@@ -410,7 +413,7 @@ nav a:hover { color: var(--accent); }
     left: -20px;
     width: 50px;
     height: 40px;
-    border: 8px solid #f4a261;
+    border: 8px solid #ffd700;
     border-radius: 50% 50% 0 50%;
     transform: rotate(-30deg);
 }
@@ -421,18 +424,19 @@ nav a:hover { color: var(--accent); }
     right: -20px;
     width: 50px;
     height: 40px;
-    border: 8px solid #f4a261;
+    border: 8px solid #ffd700;
     border-radius: 50% 50% 50% 0;
     transform: rotate(30deg);
 }
 .gift-container.open .gift-bow {
-    top: -80px;
+    top: -100px;
     transform: translateX(-50%) scale(0);
     opacity: 0;
 }
 
+/* Video Size (Matches the Gift Box) */
 .mystery-video-container {
-    max-width: 350px; /* Made smaller as requested */
+    max-width: 250px; /* Same width as the gift */
     margin: 30px auto 0 auto;
     border-radius: 15px;
     overflow: hidden;
@@ -450,14 +454,14 @@ nav a:hover { color: var(--accent); }
 /* --- FLICKERING WARNING MESSAGE --- */
 .warning-message {
     color: #e74c3c;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     font-weight: bold;
     margin: 20px auto;
     padding: 15px;
     border: 3px dashed #e74c3c;
     border-radius: 10px;
     background: rgba(231, 76, 60, 0.1);
-    max-width: 400px;
+    max-width: 350px;
 }
 .warning-message.hidden {
     display: none;
@@ -467,7 +471,7 @@ nav a:hover { color: var(--accent); }
 }
 @keyframes flicker {
     0% { opacity: 1; }
-    100% { opacity: 0.3; }
+    100% { opacity: 0.2; }
 }
 
 footer { padding: 40px; background-color: #FDE2E4; color: var(--text); font-size: 0.9rem; margin-top: 40px; }
