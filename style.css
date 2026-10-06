@@ -302,11 +302,11 @@ nav a:hover { color: var(--accent); }
 }
 .game-over button:hover { background: #5a8a73; }
 
-/* --- MYSTERY GIFT BOX STYLES --- */
+/* --- MYSTERY GIFT BOX STYLES (SHARPER COLORS & SMALLER VIDEO) --- */
 .mystery-section {
     padding: 80px 20px;
     text-align: center;
-    background: linear-gradient(135deg, #FFF8E7 0%, #FDE2E4 100%);
+    background: #ffffff; /* Sharp white background */
     border-top: 2px dashed #E8D8B8;
 }
 .mystery-section h2 {
@@ -315,16 +315,15 @@ nav a:hover { color: var(--accent); }
     margin-bottom: 40px;
 }
 
-/* Center everything in a fixed-height area to prevent jumping */
 .mystery-display-area {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 250px; /* Fits the gift and video nicely */
+    min-height: 220px;
     margin: 0 auto;
 }
 
-/* The Gift Box */
+/* The Gift Box (Sharper Red and Gold) */
 .gift-container {
     position: relative;
     width: 220px;
@@ -354,7 +353,7 @@ nav a:hover { color: var(--accent); }
     left: 0;
     width: 100%;
     height: 150px;
-    background: linear-gradient(135deg, #ff4d4d, #cc0000);
+    background: linear-gradient(135deg, #e53935, #b71c1c); /* Sharp vibrant red */
     border-radius: 0 0 10px 10px;
     box-shadow: inset 0 5px 10px rgba(0,0,0,0.1), 0 5px 15px rgba(0,0,0,0.2);
 }
@@ -364,7 +363,7 @@ nav a:hover { color: var(--accent); }
     left: -10px;
     width: 240px;
     height: 45px;
-    background: linear-gradient(135deg, #ff6666, #e60000);
+    background: linear-gradient(135deg, #ef5350, #c62828); /* Sharp red lid */
     border-radius: 8px;
     z-index: 2;
     transition: all 0.5s ease;
@@ -381,9 +380,9 @@ nav a:hover { color: var(--accent); }
     left: 95px;
     width: 30px;
     height: 150px;
-    background: linear-gradient(90deg, #ffd700, #ffb300, #ffd700);
+    background: linear-gradient(90deg, #ffca28, #ff8f00, #ffca28); /* Sharp gold */
     z-index: 1;
-    box-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+    box-shadow: 0 0 8px rgba(255, 202, 40, 0.8);
 }
 .gift-ribbon-h {
     position: absolute;
@@ -391,9 +390,9 @@ nav a:hover { color: var(--accent); }
     left: 0;
     width: 220px;
     height: 35px;
-    background: linear-gradient(0deg, #ffd700, #ffb300, #ffd700);
+    background: linear-gradient(0deg, #ffca28, #ff8f00, #ffca28); /* Sharp gold */
     z-index: 1;
-    box-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+    box-shadow: 0 0 8px rgba(255, 202, 40, 0.8);
 }
 .gift-bow {
     position: absolute;
@@ -402,7 +401,7 @@ nav a:hover { color: var(--accent); }
     transform: translateX(-50%);
     width: 70px;
     height: 30px;
-    background: #ffd700;
+    background: #ffca28;
     border-radius: 50%;
     z-index: 3;
     transition: all 0.5s ease;
@@ -415,7 +414,7 @@ nav a:hover { color: var(--accent); }
     left: -20px;
     width: 50px;
     height: 40px;
-    border: 8px solid #ffd700;
+    border: 8px solid #ffca28;
     border-radius: 50% 50% 0 50%;
     transform: rotate(-30deg);
 }
@@ -426,7 +425,7 @@ nav a:hover { color: var(--accent); }
     right: -20px;
     width: 50px;
     height: 40px;
-    border: 8px solid #ffd700;
+    border: 8px solid #ffca28;
     border-radius: 50% 50% 50% 0;
     transform: rotate(30deg);
 }
@@ -436,14 +435,14 @@ nav a:hover { color: var(--accent); }
     opacity: 0;
 }
 
-/* The Video (Smaller size, replaces the gift) */
+/* The Video (Much Smaller & Sharper Border) */
 .mystery-video-container {
-    max-width: 220px; /* Same width as the gift */
+    max-width: 150px; /* Even smaller! */
     margin: 0 auto;
-    border-radius: 15px;
+    border-radius: 10px;
     overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-    border: 5px solid #E76F51;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    border: 4px solid #d32f2f; /* Sharp red border */
 }
 .mystery-video-container.hidden {
     display: none;
@@ -453,21 +452,22 @@ nav a:hover { color: var(--accent); }
     display: block;
 }
 
-/* --- FLICKERING WARNING MESSAGE (Replaces the gift) --- */
+/* --- FLICKERING WARNING MESSAGE --- */
 .warning-message {
     display: flex;
     align-items: center;
     justify-content: center;
     width: 220px;
-    height: 180px;
-    color: #e74c3c;
-    font-size: 1.3rem;
+    height: 150px;
+    color: #b71c1c; /* Sharp dark red */
+    font-size: 1.1rem;
     font-weight: bold;
-    padding: 20px;
-    border: 4px dashed #e74c3c;
-    border-radius: 15px;
-    background: rgba(231, 76, 60, 0.1);
+    padding: 15px;
+    border: 4px dashed #b71c1c;
+    border-radius: 12px;
+    background: rgba(183, 28, 28, 0.1);
     text-transform: uppercase;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 .warning-message.hidden {
     display: none;
