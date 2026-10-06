@@ -89,17 +89,39 @@
     <!-- GAME SECTION: BENNET RUNNER -->
     <section id="game" class="game-section-runner">
         <h2>Bennet Runner</h2>
-        <p>Help Bennet jump over the obstacles! Press Spacebar or the Up Arrow to jump.</p>
+        <p>Press <strong>Space / Up Arrow</strong> to Jump. Press <strong>Down Arrow</strong> to Duck!</p>
         
-        <div class="game-container">
-            <div class="game-stats">
-                <span>Score: <span id="runner-score">0</span></span>
-                <span>High Score: <span id="runner-highscore">0</span></span>
+        <div class="game-console">
+            <div class="console-top">
+                <span class="console-title">BENNET-STATION</span>
+                <div class="console-lights">
+                    <span class="light red"></span>
+                    <span class="light yellow"></span>
+                    <span class="light green"></span>
+                </div>
             </div>
-            <canvas id="gameCanvas" width="800" height="300"></canvas>
-            <div id="game-over-message" class="game-over hidden">
-                <p>Game Over!</p>
-                <button onclick="resetRunnerGame()">Try Again</button>
+            
+            <div class="screen-bezel">
+                <div class="game-stats">
+                    <span>Score: <span id="runner-score">0</span></span>
+                    <span>High Score: <span id="runner-highscore">0</span></span>
+                </div>
+                <canvas id="gameCanvas" width="800" height="300"></canvas>
+                <div id="game-over-message" class="game-over hidden">
+                    <p>Game Over!</p>
+                    <button onclick="resetRunnerGame()">Try Again</button>
+                </div>
+            </div>
+            
+            <div class="console-bottom">
+                <div class="d-pad">
+                    <div class="d-up">▲</div>
+                    <div class="d-down">▼</div>
+                </div>
+                <div class="action-buttons">
+                    <div class="btn-a">A</div>
+                    <div class="btn-b">B</div>
+                </div>
             </div>
         </div>
     </section>
@@ -136,18 +158,27 @@
         
         const player = {
             x: 50, y: 180, width: 60, height: 70,
-            dy: 0, gravity: 0.6, jumpPower: -13, grounded: true
+            dy: 0, gravity: 0.6, jumpPower: -13, grounded: true, isCrouching: false
         };
         
         // High Score display
         document.getElementById('runner-highscore').innerText = highScore;
         
-        // Controls (Spacebar OR ArrowUp)
+        // Controls
         document.addEventListener('keydown', (e) => {
             if ((e.code === 'Space' || e.code === 'ArrowUp') && player.grounded && !isGameOver) {
                 player.dy = player.jumpPower;
                 player.grounded = false;
                 startRunnerGame();
+            }
+            if (e.code === 'ArrowDown' && !isGameOver) {
+                player.isCrouching = true;
+            }
+        });
+
+        document.addEventListener('keyup', (e) => {
+            if (e.code === 'ArrowDown') {
+                player.isCrouching = false;
             }
         });
         
@@ -167,6 +198,7 @@
                 frames = 0;
                 obstacles = [];
                 isGameOver = false;
+                player.isCrouching = false;
                 document.getElementById('game-over-message').classList.add('hidden');
                 runnerLoop();
             }
@@ -178,7 +210,10 @@
         }
 
         function runnerLoop() {
-            if (isGameOver) return;
+            // Only stop updating physics if the game is over AND he has hit the ground
+            if (isGameOver && player.y >= 250 - player.height) {
+                return;
+            }
             
             // Clear canvas
             ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -188,18 +223,25 @@
             ctx.fillStyle = '#d4f1f4'; 
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             
-            // Sun
-            ctx.fillStyle = '#FFD3B6';
+            // Sun with Rays
+            ctx.fillStyle = '#FFD700';
             ctx.beginPath();
-            ctx.arc(700, 50, 40, 0, Math.PI * 2);
+            ctx.arc(700, 50, 30, 0, Math.PI * 2);
             ctx.fill();
+            ctx.strokeStyle = '#FFD700';
+            ctx.lineWidth = 4;
+            for(let i = 0; i < 8; i++) {
+                let angle = i * Math.PI / 4;
+                ctx.beginPath();
+                ctx.moveTo(700 + Math.cos(angle) * 35, 50 + Math.sin(angle) * 35);
+                ctx.lineTo(700 + Math.cos(angle) * 50, 50 + Math.sin(angle) * 50);
+                ctx.stroke();
+            }
             
             // Trees (static)
             for(let i = 0; i < canvas.width; i += 150) {
-                // Trunk
                 ctx.fillStyle = '#6B4226';
                 ctx.fillRect(i + 30, 180, 20, 70);
-                // Leaves
                 ctx.fillStyle = '#4CAF50';
                 ctx.beginPath();
                 ctx.arc(i + 40, 160, 40, 0, Math.PI * 2);
@@ -210,68 +252,112 @@
             ctx.fillStyle = '#81B29A';
             ctx.fillRect(0, 250, canvas.width, 50);
             
-            // --- DRAW PLAYER (Bennet with Body) ---
+            // --- PLAYER PHYSICS & ANIMATION ---
+            if (!isGameOver) {
+                // Update height based on crouching
+                if (player.isCrouching && player.grounded) {
+                    player.height = 40;
+                    player.width = 60;
+                } else {
+                    player.height = 70;
+                    player.width = 60;
+                }
+
+                player.y += player.dy;
+                if (player.y + player.height < 250) {
+                    player.dy += player.gravity;
+                    player.grounded = false;
+                } else {
+                    player.y = 250 - player.height;
+                    player.dy = 0;
+                    player.grounded = true;
+                }
+            } else {
+                // Death animation: fall to the ground
+                player.dy += player.gravity;
+                player.y += player.dy;
+                if (player.y + player.height > 250) {
+                    player.y = 250 - player.height;
+                    player.dy = 0;
+                }
+            }
+            
+            // --- DRAW PLAYER ---
             // Draw Legs
-            ctx.fillStyle = '#3D405B'; // Dark pants
-            ctx.fillRect(player.x + 15, player.y + 50, 10, 20); // Left leg
-            ctx.fillRect(player.x + 35, player.y + 50, 10, 20); // Right leg
+            ctx.fillStyle = '#3D405B';
+            if (player.isCrouching) {
+                ctx.fillRect(player.x + 15, player.y + 30, 10, 10);
+                ctx.fillRect(player.x + 35, player.y + 30, 10, 10);
+            } else {
+                ctx.fillRect(player.x + 15, player.y + 50, 10, 20);
+                ctx.fillRect(player.x + 35, player.y + 50, 10, 20);
+            }
 
             // Draw Body
-            ctx.fillStyle = '#E07A5F'; // Warm shirt
-            ctx.fillRect(player.x + 10, player.y + 25, 40, 25); // Torso
+            ctx.fillStyle = '#E07A5F';
+            if (player.isCrouching) {
+                ctx.fillRect(player.x + 10, player.y + 15, 40, 15);
+            } else {
+                ctx.fillRect(player.x + 10, player.y + 25, 40, 25);
+            }
 
             // Draw Arms
-            ctx.fillRect(player.x - 5, player.y + 30, 15, 10); // Left arm
-            ctx.fillRect(player.x + 50, player.y + 30, 15, 10); // Right arm
+            if (player.isCrouching) {
+                ctx.fillRect(player.x - 5, player.y + 20, 15, 10);
+                ctx.fillRect(player.x + 50, player.y + 20, 15, 10);
+            } else {
+                ctx.fillRect(player.x - 5, player.y + 30, 15, 10);
+                ctx.fillRect(player.x + 50, player.y + 30, 15, 10);
+            }
 
-            // Draw Head (Circular clip to hide black background)
+            // Draw Head (Circular clip)
             ctx.save();
+            let headY = player.isCrouching ? player.y + 5 : player.y + 15;
             ctx.beginPath();
-            ctx.arc(player.x + 30, player.y + 15, 22, 0, Math.PI * 2); // Circle shape
-            ctx.clip(); // Everything drawn after this is cropped to the circle
+            ctx.arc(player.x + 30, headY, 22, 0, Math.PI * 2);
+            ctx.clip();
             
             if (bennetImg.complete) {
-                // Draw image centered inside the circle
-                ctx.drawImage(bennetImg, player.x + 5, player.y - 10, 50, 50);
+                ctx.drawImage(bennetImg, player.x + 5, headY - 25, 50, 50);
             } else {
-                // Fallback if image isn't loaded
                 ctx.fillStyle = '#F4D03F';
                 ctx.fill();
             }
-            ctx.restore(); // End the circular crop
-            
-            // --- PLAYER PHYSICS ---
-            player.y += player.dy;
-            if (player.y + player.height < 250) {
-                player.dy += player.gravity;
-                player.grounded = false;
-            } else {
-                player.y = 250 - player.height;
-                player.dy = 0;
-                player.grounded = true;
-            }
+            ctx.restore();
             
             // --- SPAWN OBSTACLES ---
-            if (frames % 90 === 0 && runnerGameActive) {
-                obstacles.push({
-                    x: canvas.width,
-                    y: 230,
-                    width: 20,
-                    height: 20,
-                    speed: 5
-                });
+            if (!isGameOver && frames % 100 === 0 && runnerGameActive) {
+                let type = Math.random() > 0.5 ? 'ground' : 'air';
+                let obs = { x: canvas.width, width: 20, height: 20, speed: 6, type: type };
+                if (type === 'ground') {
+                    obs.y = 230; // On the ground
+                } else {
+                    obs.y = 180; // In the air (must duck)
+                }
+                obstacles.push(obs);
             }
             
             // --- DRAW AND MOVE OBSTACLES ---
             obstacles.forEach((obs, index) => {
                 obs.x -= obs.speed;
-                ctx.fillStyle = '#E07A5F';
-                ctx.beginPath();
-                ctx.arc(obs.x + 10, obs.y + 10, 10, 0, Math.PI * 2); // Circle obstacle
-                ctx.fill();
+                
+                if (obs.type === 'ground') {
+                    ctx.fillStyle = '#E07A5F'; // Red rock
+                    ctx.beginPath();
+                    ctx.arc(obs.x + 10, obs.y + 10, 10, 0, Math.PI * 2);
+                    ctx.fill();
+                } else {
+                    ctx.fillStyle = '#F4D03F'; // Yellow bird
+                    ctx.beginPath();
+                    ctx.moveTo(obs.x, obs.y + 10);
+                    ctx.lineTo(obs.x + 10, obs.y);
+                    ctx.lineTo(obs.x + 20, obs.y + 10);
+                    ctx.fill();
+                }
                 
                 // Collision Detection
-                if (player.x < obs.x + obs.width &&
+                if (!isGameOver && 
+                    player.x < obs.x + obs.width &&
                     player.x + player.width > obs.x &&
                     player.y < obs.y + obs.height &&
                     player.y + player.height > obs.y) {
@@ -283,7 +369,7 @@
             });
             
             // --- UPDATE SCORE ---
-            if (frames % 10 === 0 && runnerGameActive) {
+            if (!isGameOver && frames % 20 === 0 && runnerGameActive) {
                 runnerScore++;
                 document.getElementById('runner-score').innerText = runnerScore;
             }
@@ -295,18 +381,18 @@
         function endRunnerGame() {
             isGameOver = true;
             runnerGameActive = false;
-            document.getElementById('game-over-message').classList.remove('hidden');
             
             // Check for New High Score
             if (runnerScore > highScore) {
                 highScore = runnerScore;
                 localStorage.setItem('bennetHighScore', highScore);
                 document.getElementById('runner-highscore').innerText = highScore;
-                
-                // Bennet Happy Jump Animation
-                player.dy = -20;
-                setTimeout(() => { player.dy = 0; player.y = 250 - player.height; }, 500);
             }
+
+            // Wait for death animation to finish before showing the message
+            setTimeout(() => {
+                document.getElementById('game-over-message').classList.remove('hidden');
+            }, 1000);
         }
     </script>
 </body>
