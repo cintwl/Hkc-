@@ -3,550 +3,272 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Get to Know Bennet</title>
+    <title>BLACKPINK IN YOUR AREA</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- PASSWORD SCREEN OVERLAY -->
-    <div id="password-screen">
-        <div class="password-box">
-            <h2>🔒 Private Gallery</h2>
-            <p>Please enter the password to view this website.</p>
-            <input type="password" id="password-input" placeholder="Enter password...">
-            <button onclick="checkPassword()">Unlock</button>
-            <p id="error-message"></p>
+    <!-- NAVIGATION -->
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#members">Members</a>
+        <a href="#music">Albums</a>
+        <a href="#gallery">Gallery</a>
+    </nav>
+
+    <!-- HERO SECTION WITH BACKGROUND PHOTO -->
+    <header id="home" class="hero-section">
+        <div class="hero-bg">
+            <img src="all.jpg" alt="Blackpink Group">
         </div>
-    </div>
+        
+        <div class="hero-content">
+            <h1>BLACKPINK</h1>
+            <p>In your area.</p>
+            <div class="scroll-indicator">Scroll to explore ↓</div>
+        </div>
+    </header>
 
-    <!-- MAIN WEBSITE CONTENT (Hidden until password is entered) -->
-    <div id="website-content" style="display: none;">
+    <!-- MEMBERS SECTION WITH 3D TILT CARDS -->
+    <section id="members" class="members-section">
+        <h2>The Members</h2>
+        <p class="subtitle">Hover over a card to see the 3D effect, then click to reveal them.</p>
+        
+        <!-- Cute 3D Guide Character -->
+        <div class="guide-character">
+            <div class="guide-bubble">Click me!</div>
+            <div class="guide-icon">🐰</div>
+        </div>
 
-        <!-- NAVIGATION -->
-        <nav>
-            <a href="#home">Home</a>
-            <a href="#cards">Get to Know Him</a>
-            <a href="#wrapped">Bennet Wrapped</a>
-            <a href="#tv">Bennet TV</a>
-            <a href="#game">Play Game</a>
-            <a href="#mystery">Surprise!</a>
-        </nav>
-
-        <!-- HERO SECTION -->
-        <header id="home" class="hero-section">
-            <h1>Get to Know Bennet</h1>
-            <p>Click on a card to flip it over and see a piece of Bennet's world.</p>
-            <div class="scroll-indicator">Click the card</div>
-        </header>
-
-        <!-- INTERACTIVE CARDS SECTION -->
-        <section id="cards" class="cards-section">
-            <h2>His Daily Life</h2>
-            <p class="subtitle">Go ahead — click a card.</p>
-
-            <div class="cards-grid">
-                <div class="flip-card">
-                    <div class="flip-card-inner">
-                        <div class="flip-card-front">
-                            <span class="icon">✨</span>
-                            <h3>QQ</h3>
-                            <p>Something special about QQ</p>
-                        </div>
-                        <div class="flip-card-back">
-                            <img src="qq.jpg" alt="QQ">
-                        </div>
+        <div class="members-grid">
+            <!-- Jisoo Card -->
+            <div class="flip-card" onclick="this.classList.toggle('is-flipped')">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <div class="member-icon">🎤</div>
+                        <h3>Jisoo</h3>
+                        <p>The elegant vocalist and actress.</p>
                     </div>
-                </div>
-                <div class="flip-card">
-                    <div class="flip-card-inner">
-                        <div class="flip-card-front">
-                            <span class="icon">🐻</span>
-                            <h3>Winnie the Pooh</h3>
-                            <p>A gallery of adorable photos</p>
-                        </div>
-                        <div class="flip-card-back">
-                            <img src="winnie.jpg" alt="Winnie the Pooh">
-                        </div>
-                    </div>
-                </div>
-                <div class="flip-card">
-                    <div class="flip-card-inner">
-                        <div class="flip-card-front">
-                            <span class="icon">🐶</span>
-                            <h3>Kaka</h3>
-                            <p>The cutest dog in the world</p>
-                        </div>
-                        <div class="flip-card-back">
-                            <img src="kaka.jpg" alt="Kaka the dog">
-                        </div>
-                    </div>
-                </div>
-                <div class="flip-card">
-                    <div class="flip-card-inner">
-                        <div class="flip-card-front">
-                            <span class="icon">😠</span>
-                            <h3>Angry</h3>
-                            <p>His grumpy face</p>
-                        </div>
-                        <div class="flip-card-back">
-                            <img src="angry.jpg" alt="Angry Bennet">
-                        </div>
+                    <div class="flip-card-back">
+                        <img src="jisoo.jpg" alt="Jisoo">
                     </div>
                 </div>
             </div>
-        </section>
 
-        <!-- BENNET WRAPPED SECTION -->
-        <section id="wrapped" class="wrapped-section">
-            <h2>Bennet Wrapped</h2>
-            <p class="subtitle">The official 2026 year-end report</p>
-            
-            <div class="wrapped-grid">
-                <div class="stat-card">
-                    <div class="stat-number">95%</div>
-                    <p class="stat-label">Time playing game</p>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">1%</div>
-                    <p class="stat-label">Admitting he is wrong</p>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">1%</div>
-                    <p class="stat-label">Time with his girlfriend</p>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">3%</div>
-                    <p class="stat-label">Time spent with Kaka</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- BENNET TV SECTION -->
-        <section id="tv" class="tv-section">
-            <h2>Bennet TV</h2>
-            <p>Pick a channel to watch Bennet in action!</p>
-            
-            <div class="tv-wrapper">
-                <div class="antenna left"></div>
-                <div class="antenna right"></div>
-                
-                <div class="tv-console">
-                    <div class="tv-screen-bezel">
-                        <video id="bennet-tv-player" controls>
-                            <source src="eating.mp4" type="video/mp4">
-                            Your browser does not support the video tag.
-                        </video>
+            <!-- Jennie Card -->
+            <div class="flip-card" onclick="this.classList.toggle('is-flipped')">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <div class="member-icon">🔥</div>
+                        <h3>Jennie</h3>
+                        <p>The fierce rapper and fashion icon.</p>
                     </div>
-                    
-                    <div class="tv-controls">
-                        <button class="tv-btn btn-eating active" onclick="changeChannel('eating.mp4', this)">
-                            <span class="btn-icon">🍽️</span>
-                            <span class="btn-text">Eating</span>
-                        </button>
-                        <button class="tv-btn btn-woman" onclick="changeChannel('on9.mp4', this)">
-                            <span class="btn-icon">👩</span>
-                            <span class="btn-text">Woman</span>
-                        </button>
-                        <button class="tv-btn btn-kaka" onclick="changeChannel('kaka.mp4', this)">
-                            <span class="btn-icon">🐶</span>
-                            <span class="btn-text">Kaka</span>
-                        </button>
-                        <button class="tv-btn btn-sleeping" onclick="changeChannel('sleeping.mp4', this)">
-                            <span class="btn-icon">😴</span>
-                            <span class="btn-text">Sleeping</span>
-                        </button>
+                    <div class="flip-card-back">
+                        <img src="jennie.jpg" alt="Jennie">
                     </div>
                 </div>
             </div>
-        </section>
 
-        <!-- GAME SECTION: BENNET RUNNER -->
-        <section id="game" class="game-section-runner">
-            <h2>Bennet Runner</h2>
-            <p>Press <strong>Space / Up Arrow</strong> to Jump. Press <strong>Down Arrow</strong> to Duck!</p>
-            
-            <div class="game-console">
-                <div class="console-top">
-                    <span class="console-title">BENNET-STATION</span>
-                    <div class="console-lights">
-                        <span class="light red"></span>
-                        <span class="light yellow"></span>
-                        <span class="light green"></span>
+            <!-- Rosé Card -->
+            <div class="flip-card" onclick="this.classList.toggle('is-flipped')">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <div class="member-icon">🎸</div>
+                        <h3>Rosé</h3>
+                        <p>The golden-voiced main vocalist.</p>
                     </div>
-                </div>
-                
-                <div class="screen-bezel">
-                    <div class="game-stats">
-                        <span>Score: <span id="runner-score">0</span></span>
-                        <span>High Score: <span id="runner-highscore">0</span></span>
-                    </div>
-                    <canvas id="gameCanvas" width="800" height="300"></canvas>
-                    <div id="game-over-message" class="game-over hidden">
-                        <p>Game Over!</p>
-                        <button onclick="resetRunnerGame()">Try Again</button>
+                    <div class="flip-card-back">
+                        <img src="rosie.jpg" alt="Rosé">
                     </div>
                 </div>
             </div>
-        </section>
 
-        <!-- MYSTERY GIFT BOX SECTION -->
-        <section id="mystery" class="mystery-section">
-            <h2 id="mystery-title">A Little Surprise</h2>
-            
-            <div class="mystery-display-area">
-                <div class="gift-container" id="gift-box" onclick="openGift()">
-                    <div class="gift-lid"></div>
-                    <div class="gift-box-body"></div>
-                    <div class="gift-ribbon-v"></div>
-                    <div class="gift-ribbon-h"></div>
-                    <div class="gift-bow"></div>
-                </div>
-
-                <div id="warning-message" class="warning-message hidden">
-                    ⚠️ EXTREME CUTENESS DETECTED ⚠️
-                </div>
-
-                <div class="mystery-video-container hidden" id="mystery-video">
-                    <div class="dog-orbit">
-                        <div class="dog-body">🐶</div>
+            <!-- Lisa Card -->
+            <div class="flip-card" onclick="this.classList.toggle('is-flipped')">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <div class="member-icon">💃</div>
+                        <h3>Lisa</h3>
+                        <p>The incredible main dancer and rapper.</p>
                     </div>
-                    <video controls>
-                        <source src="cute.mp4" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
+                    <div class="flip-card-back">
+                        <img src="lisa.jpg" alt="Lisa">
+                    </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <footer>
-            <p>love u</p>
-        </footer>
+    <!-- MUSIC SECTION WITH ALBUM COVERS -->
+    <section id="music" class="music-section">
+        <h2>Albums</h2>
+        <p class="subtitle">Click an album cover to play the songs!</p>
+        
+        <div class="album-grid">
+            <!-- Album 1 -->
+            <div class="album-item">
+                <div class="album-cover" onclick="toggleAlbum('album1')">
+                    <img src="all.jpg" alt="Album 1">
+                    <div class="album-overlay">
+                        <span class="play-icon">▶</span>
+                    </div>
+                </div>
+                <h3>THE ALBUM</h3>
+                <div class="progress-container" id="progress-container-album1">
+                    <input type="range" class="progress-bar" value="0" max="100" oninput="seekAudio(this)">
+                    <button class="stop-btn" onclick="stopAudio(this)">⏹</button>
+                </div>
+                <audio src="song1.mp3" ontimeupdate="updateProgress(this)" onended="resetAudio(this)"></audio>
+            </div>
 
-    </div> <!-- End of website-content -->
+            <!-- Album 2 -->
+            <div class="album-item">
+                <div class="album-cover" onclick="toggleAlbum('album2')">
+                    <img src="jennie.jpg" alt="Album 2">
+                    <div class="album-overlay">
+                        <span class="play-icon">▶</span>
+                    </div>
+                </div>
+                <h3>BORN PINK</h3>
+                <div class="progress-container" id="progress-container-album2">
+                    <input type="range" class="progress-bar" value="0" max="100" oninput="seekAudio(this)">
+                    <button class="stop-btn" onclick="stopAudio(this)">⏹</button>
+                </div>
+                <audio src="song2.mp3" ontimeupdate="updateProgress(this)" onended="resetAudio(this)"></audio>
+            </div>
+
+            <!-- Album 3 -->
+            <div class="album-item">
+                <div class="album-cover" onclick="toggleAlbum('album3')">
+                    <img src="rosie.jpg" alt="Album 3">
+                    <div class="album-overlay">
+                        <span class="play-icon">▶</span>
+                    </div>
+                </div>
+                <h3>KILL THIS LOVE</h3>
+                <div class="progress-container" id="progress-container-album3">
+                    <input type="range" class="progress-bar" value="0" max="100" oninput="seekAudio(this)">
+                    <button class="stop-btn" onclick="stopAudio(this)">⏹</button>
+                </div>
+                <audio src="song3.mp3" ontimeupdate="updateProgress(this)" onended="resetAudio(this)"></audio>
+            </div>
+
+            <!-- Album 4 -->
+            <div class="album-item">
+                <div class="album-cover" onclick="toggleAlbum('album4')">
+                    <img src="lisa.jpg" alt="Album 4">
+                    <div class="album-overlay">
+                        <span class="play-icon">▶</span>
+                    </div>
+                </div>
+                <h3>PINK VENOM</h3>
+                <div class="progress-container" id="progress-container-album4">
+                    <input type="range" class="progress-bar" value="0" max="100" oninput="seekAudio(this)">
+                    <button class="stop-btn" onclick="stopAudio(this)">⏹</button>
+                </div>
+                <audio src="song4.mp3" ontimeupdate="updateProgress(this)" onended="resetAudio(this)"></audio>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>BLACKPINK IN YOUR AREA 💗🖤</p>
+    </footer>
 
     <script>
-        // --- PASSWORD LOGIC ---
-        function checkPassword() {
-            const input = document.getElementById('password-input').value;
-            const correctPassword = "bennet2026"; // You can change this password here
-
-            if (input === correctPassword) {
-                document.getElementById('password-screen').style.display = 'none';
-                document.getElementById('website-content').style.display = 'block';
-            } else {
-                document.getElementById('error-message').innerText = "Incorrect password. Try again.";
-                document.getElementById('password-input').value = '';
-            }
-        }
-
-        // Allow pressing "Enter" to submit password
-        document.getElementById('password-input').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                checkPassword();
-            }
-        });
-
-        // --- FLIP CARD LOGIC ---
+        // --- MEMBER CARD 3D TILT LOGIC ---
         const cards = document.querySelectorAll('.flip-card');
+        
         cards.forEach(card => {
-            card.addEventListener('click', () => {
-                card.classList.toggle('is-flipped');
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const rotateX = (y - centerY) / 10;
+                const rotateY = (centerX - x) / 10;
+                
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
             });
         });
 
-        // --- BENNET TV LOGIC ---
-        function changeChannel(videoSrc, btn) {
-            const player = document.getElementById('bennet-tv-player');
-            player.src = videoSrc;
-            player.load();
-            player.play();
+        // --- ALBUM PLAYER LOGIC ---
+        function toggleAlbum(albumId) {
+            const container = document.getElementById('progress-container-' + albumId);
+            const songItem = container.closest('.album-item');
+            const audio = songItem.querySelector('audio');
+            const cover = songItem.querySelector('.album-cover');
             
-            document.querySelectorAll('.tv-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-        }
-
-        // --- MYSTERY GIFT BOX LOGIC ---
-        function openGift() {
-            const gift = document.getElementById('gift-box');
-            const warning = document.getElementById('warning-message');
-            const videoContainer = document.getElementById('mystery-video');
-            const video = videoContainer.querySelector('video');
-            const title = document.getElementById('mystery-title');
-
-            if (gift.style.display === 'none') return; 
-
-            gift.classList.add('shake');
-
-            setTimeout(() => {
-                gift.classList.remove('shake');
-                gift.classList.add('open');
-
-                setTimeout(() => {
-                    gift.style.display = 'none'; 
-                    title.style.display = 'none'; 
-                    warning.classList.remove('hidden');
-                    warning.classList.add('flicker');
-
-                    setTimeout(() => {
-                        warning.classList.add('hidden');
-                        warning.classList.remove('flicker');
-                        videoContainer.classList.remove('hidden');
-                        
-                        video.play().catch(e => console.log("Auto-play blocked:", e));
-                        
-                        video.onended = function() {
-                            videoContainer.classList.add('hidden');
-                            gift.style.display = 'block';
-                            gift.classList.remove('open');
-                            title.style.display = 'block';
-                        };
-                    }, 2500); 
-
-                }, 500); 
-
-            }, 500); 
-        }
-
-        // --- BENNET RUNNER GAME LOGIC ---
-        const canvas = document.getElementById('gameCanvas');
-        const ctx = canvas.getContext('2d');
-        
-        let runnerGameActive = false;
-        let runnerScore = 0;
-        let highScore = localStorage.getItem('bennetHighScore') || 0;
-        let frames = 0;
-        let obstacles = [];
-        let isGameOver = false;
-        
-        const bennetImg = new Image();
-        bennetImg.src = 'head.jpg'; 
-        
-        const player = {
-            x: 50, y: 180, width: 60, height: 70,
-            dy: 0, gravity: 0.7, jumpPower: -10, grounded: true, isCrouching: false
-        };
-        
-        document.getElementById('runner-highscore').innerText = highScore;
-        
-        document.addEventListener('keydown', (e) => {
-            if (e.code === 'Space' || e.code === 'ArrowUp' || e.code === 'ArrowDown') {
-                e.preventDefault();
-            }
-
-            if ((e.code === 'Space' || e.code === 'ArrowUp') && player.grounded && !isGameOver) {
-                player.dy = player.jumpPower;
-                player.grounded = false;
-                startRunnerGame();
-            }
-            if (e.code === 'ArrowDown' && !isGameOver) {
-                player.isCrouching = true;
-            }
-        });
-
-        document.addEventListener('keyup', (e) => {
-            if (e.code === 'ArrowDown') {
-                player.isCrouching = false;
-            }
-        });
-        
-        canvas.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            if (player.grounded && !isGameOver) {
-                player.dy = player.jumpPower;
-                player.grounded = false;
-                startRunnerGame();
-            }
-        });
-
-        function startRunnerGame() {
-            if (!runnerGameActive) {
-                runnerGameActive = true;
-                runnerScore = 0;
-                frames = 0;
-                obstacles = [];
-                isGameOver = false;
-                player.isCrouching = false;
-                document.getElementById('runner-score').innerText = runnerScore;
-                document.getElementById('game-over-message').classList.add('hidden');
-                runnerLoop();
-            }
-        }
-        
-        function resetRunnerGame() {
-            isGameOver = false;
-            startRunnerGame();
-        }
-
-        function runnerLoop() {
-            if (isGameOver && player.y >= 250 - player.height) return;
+            // Toggle progress bar visibility
+            container.classList.toggle('active');
             
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
-            ctx.fillStyle = '#d4f1f4'; 
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            
-            ctx.fillStyle = '#FFD700';
-            ctx.beginPath();
-            ctx.arc(700, 50, 30, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.strokeStyle = '#FFD700';
-            ctx.lineWidth = 4;
-            for(let i = 0; i < 8; i++) {
-                let angle = i * Math.PI / 4;
-                ctx.beginPath();
-                ctx.moveTo(700 + Math.cos(angle) * 35, 50 + Math.sin(angle) * 35);
-                ctx.lineTo(700 + Math.cos(angle) * 50, 50 + Math.sin(angle) * 50);
-                ctx.stroke();
-            }
-            
-            for(let i = 0; i < canvas.width; i += 150) {
-                ctx.fillStyle = '#6B4226';
-                ctx.fillRect(i + 30, 180, 20, 70);
-                ctx.fillStyle = '#4CAF50';
-                ctx.beginPath();
-                ctx.arc(i + 40, 160, 40, 0, Math.PI * 2);
-                ctx.fill();
-            }
-            
-            ctx.fillStyle = '#81B29A';
-            ctx.fillRect(0, 250, canvas.width, 50);
-            
-            if (!isGameOver) {
-                if (player.isCrouching && player.grounded) {
-                    player.height = 20;
-                    player.width = 70;
-                    player.y = 250 - player.height; 
-                } else {
-                    player.height = 70;
-                    player.width = 60;
-                }
-
-                player.y += player.dy;
-                if (player.y + player.height < 250) {
-                    player.dy += player.gravity;
-                    player.grounded = false;
-                } else {
-                    player.y = 250 - player.height;
-                    player.dy = 0;
-                    player.grounded = true;
-                }
+            // Toggle play/pause
+            if (audio.paused) {
+                // Pause all other songs
+                document.querySelectorAll('audio').forEach(a => {
+                    if (a !== audio) {
+                        a.pause();
+                        a.currentTime = 0;
+                        const otherContainer = a.closest('.album-item').querySelector('.progress-container');
+                        otherContainer.classList.remove('active');
+                        otherContainer.querySelector('.progress-bar').value = 0;
+                        otherContainer.querySelector('.progress-bar').style.setProperty('--progress', '0%');
+                    }
+                });
+                
+                audio.play();
+                cover.classList.add('playing');
             } else {
-                player.dy += player.gravity;
-                player.y += player.dy;
-                if (player.y + player.height > 250) {
-                    player.y = 250 - player.height;
-                    player.dy = 0;
-                }
+                audio.pause();
+                cover.classList.remove('playing');
             }
-            
-            if (player.isCrouching) {
-                ctx.fillStyle = '#3D405B';
-                ctx.fillRect(player.x + 10, player.y + 15, 20, 5);
-                
-                ctx.fillStyle = '#E07A5F';
-                ctx.fillRect(player.x + 25, player.y + 10, 35, 10);
-                ctx.fillRect(player.x + 35, player.y + 10, 15, 8);
-                
-                ctx.save();
-                let headY = player.y + 10;
-                let headX = player.x + 65;
-                ctx.beginPath();
-                ctx.arc(headX, headY, 18, 0, Math.PI * 2);
-                ctx.clip();
-                if (bennetImg.complete) {
-                    ctx.drawImage(bennetImg, headX - 20, headY - 20, 40, 40);
-                } else {
-                    ctx.fillStyle = '#F4D03F';
-                    ctx.fill();
-                }
-                ctx.restore();
-            } else {
-                ctx.fillStyle = '#3D405B';
-                ctx.fillRect(player.x + 15, player.y + 50, 10, 20); 
-                ctx.fillRect(player.x + 35, player.y + 50, 10, 20);
-                
-                ctx.fillStyle = '#E07A5F';
-                ctx.fillRect(player.x + 10, player.y + 25, 40, 25); 
-                
-                ctx.fillRect(player.x - 5, player.y + 30, 15, 10);
-                ctx.fillRect(player.x + 50, player.y + 30, 15, 10);
-                
-                ctx.save();
-                let headY = player.y + 15;
-                let headX = player.x + 30;
-                ctx.beginPath();
-                ctx.arc(headX, headY, 18, 0, Math.PI * 2);
-                ctx.clip();
-                if (bennetImg.complete) {
-                    ctx.drawImage(bennetImg, headX - 20, headY - 20, 40, 40);
-                } else {
-                    ctx.fillStyle = '#F4D03F';
-                    ctx.fill();
-                }
-                ctx.restore();
-            }
-            
-            if (!isGameOver && frames % 100 === 0 && runnerGameActive) {
-                let type = Math.random() > 0.5 ? 'ground' : 'air';
-                let obs = { x: canvas.width, width: 20, height: 20, speed: 6, type: type };
-                if (type === 'ground') {
-                    obs.y = 230; 
-                } else {
-                    obs.y = 170; 
-                }
-                obstacles.push(obs);
-            }
-            
-            obstacles.forEach((obs, index) => {
-                obs.x -= obs.speed;
-                
-                if (obs.type === 'ground') {
-                    ctx.fillStyle = '#E07A5F'; 
-                    ctx.beginPath();
-                    ctx.arc(obs.x + 10, obs.y + 10, 10, 0, Math.PI * 2);
-                    ctx.fill();
-                } else {
-                    ctx.fillStyle = '#F4D03F'; 
-                    ctx.beginPath();
-                    ctx.moveTo(obs.x, obs.y + 10);
-                    ctx.lineTo(obs.x + 10, obs.y);
-                    ctx.lineTo(obs.x + 20, obs.y + 10);
-                    ctx.fill();
-                }
-                
-                if (!isGameOver && 
-                    player.x < obs.x + obs.width &&
-                    player.x + player.width > obs.x &&
-                    player.y < obs.y + obs.height &&
-                    player.y + player.height > obs.y) {
-                    endRunnerGame();
-                }
-                
-                if (obs.x + obs.width < 0) {
-                    obstacles.splice(index, 1);
-                    runnerScore++;
-                    document.getElementById('runner-score').innerText = runnerScore;
-                }
-            });
-            
-            frames++;
-            requestAnimationFrame(runnerLoop);
         }
 
-        function endRunnerGame() {
-            isGameOver = true;
-            runnerGameActive = false;
-            
-            if (runnerScore > highScore) {
-                highScore = runnerScore;
-                localStorage.setItem('bennetHighScore', highScore);
-                document.getElementById('runner-highscore').innerText = highScore;
-            }
+        function stopAudio(btn) {
+            const songItem = btn.closest('.album-item');
+            const audio = songItem.querySelector('audio');
+            const cover = songItem.querySelector('.album-cover');
+            const progressBar = songItem.querySelector('.progress-bar');
 
-            setTimeout(() => {
-                document.getElementById('game-over-message').classList.remove('hidden');
-            }, 1000);
+            audio.pause();
+            audio.currentTime = 0;
+            cover.classList.remove('playing');
+            progressBar.value = 0;
+            progressBar.style.setProperty('--progress', '0%');
+        }
+
+        function updateProgress(audio) {
+            const songItem = audio.closest('.album-item');
+            const progressBar = songItem.querySelector('.progress-bar');
+            if (audio.duration) {
+                progressBar.value = (audio.currentTime / audio.duration) * 100;
+                progressBar.style.setProperty('--progress', progressBar.value + '%');
+            }
+        }
+
+        function seekAudio(input) {
+            const songItem = input.closest('.album-item');
+            const audio = songItem.querySelector('audio');
+            if (audio.duration) {
+                audio.currentTime = (input.value / 100) * audio.duration;
+                input.style.setProperty('--progress', input.value + '%');
+            }
+        }
+
+        function resetAudio(audio) {
+            const songItem = audio.closest('.album-item');
+            const cover = songItem.querySelector('.album-cover');
+            const progressBar = songItem.querySelector('.progress-bar');
+            cover.classList.remove('playing');
+            progressBar.value = 0;
+            progressBar.style.setProperty('--progress', '0%');
         }
     </script>
+
 </body>
 </html>
